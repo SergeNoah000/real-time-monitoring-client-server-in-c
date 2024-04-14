@@ -1,0 +1,70 @@
+[ WED 10-04-2024 13:47:48 ] Error: Too few arguments given (PORT missing) 
+[ WED 10-04-2024 13:47:55 ] Error: Binding of port to the sokcket failled  
+[ WED 10-04-2024 14:43:42 ] Warning: Connexion with client 127.0.0.1:59186 lost 
+[ WED 10-04-2024 14:48:53 ] Warning: Connexion with client 127.0.0.1:39684 lost 
+[ WED 10-04-2024 14:55:37 ] Warning: Connexion with client 127.0.0.1:42098 lost 
+[ WED 10-04-2024 15:00:37 ] Warning: Connexion with client 127.0.0.1:44468 lost 
+[ WED 10-04-2024 15:02:36 ] Warning: Connexion with client 127.0.0.1:46904 lost 
+[ WED 10-04-2024 15:04:37 ] Warning: Connexion with client 127.0.0.1:42822 lost 
+[ WED 10-04-2024 15:05:05 ] Warning: Connexion with client 127.0.0.1:56098 lost 
+[ WED 10-04-2024 16:11:19 ] Warning: Connexion with client 127.0.0.1:58506 lost 
+[ WED 10-04-2024 16:11:48 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:12:15 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:12:15 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:12:23 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:12:23 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:12:24 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:12:24 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:12:24 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:12:24 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:18:18 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:18:42 ] Warning: Connexion with client 127.0.0.1:55818 lost 
+[ WED 10-04-2024 16:21:46 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:27:48 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:28:02 ] Warning: Connexion with client 127.0.0.1:46286 lost 
+[ WED 10-04-2024 16:28:24 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:29:37 ] Warning: Connexion with client 127.0.0.1:60018 lost 
+[ WED 10-04-2024 16:29:55 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:30:47 ] Warning: Connexion with client 127.0.0.1:41288 lost 
+[ WED 10-04-2024 16:34:19 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:40:53 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:40:53 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:40:53 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:42:04 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:42:04 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:42:04 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:43:24 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:43:24 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:45:05 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 16:45:05 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:07:14 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:08:22 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:08:22 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:13:14 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:13:14 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:15:17 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:15:17 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:15:17 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:29:49 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:30:15 ] Error: Failled to open the 'server_data.log' file 
+[ WED 10-04-2024 17:33:10 ] Error: Failled to open the 'server_data.log' file 
+[ WED 10-04-2024 17:33:49 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:34:49 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:35:48 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:36:14 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:38:18 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:39:47 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:40:17 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:51:18 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ WED 10-04-2024 17:52:28 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 14-04-2024 12:16:33 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 14-04-2024 12:18:01 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 14-04-2024 12:28:59 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 14-04-2024 12:29:10 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 14-04-2024 12:29:30 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 14-04-2024 12:31:13 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 14-04-2024 13:56:13 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 14-04-2024 13:58:10 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 14-04-2024 13:58:11 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 14-04-2024 13:58:11 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 14-04-2024 13:58:12 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
