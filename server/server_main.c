@@ -33,7 +33,7 @@ int active_threads = 0;
     When it receive data, it logs it in the "server_data.log" file
     in the format: 
 
-        CLIENT_IP
+        CLIENT_IP::
         FILE_1 FILE_1_SIZE FILE_1_LAST_MODIFIED_DATE
         FILE_2 FILE_2_SIZE FILE_2_LAST_MODIFIED_DATE
         FILE_3 FILE_2_SIZE FILE_3_LAST_MODIFIED_DATE
@@ -178,21 +178,11 @@ void *handle_connection(void ) {
         free(str_date);
 
         char *data = ascii_to_utf8(buffer);
-        // Log the received datas
-        
-        /*int fd = open(FILE_DATA, O_APPEND | O_CREAT | O_WRONLY, 0644);
-        if (fd == -1) {
-            perror("open");
-            exit(EXIT_FAILURE);
-        }
-        ;
-        char addr[40] ={0};
-        sprintf(addr, "\n\n%s:\n", inet_ntoa(client_address.sin_addr)); 
-        write(fd, addr, strlen(addr));
-        write(fd, data, strlen(data));
-        free(data);
-        close(fd);*/
+
+        // Log the received datas        
+        pthread_mutex_lock(&mutex);
         replace_log_message(inet_ntoa(client_address.sin_addr), data);
+        pthread_mutex_unlock(&mutex);
         char *message;
         message = malloc(sizeof(char) * 70);
         sprintf(message, "Update 'server_data.log' caused by client  ``%s`` ", inet_ntoa(client_address.sin_addr));

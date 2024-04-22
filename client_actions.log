@@ -288,3 +288,211 @@
 [ SUN 14-04-2024 13:58:11 ] Info: File operation : Moving Out Action 
 [ SUN 14-04-2024 13:58:11 ] Info: File operation : Moving Out Action 
 [ SUN 14-04-2024 13:58:12 ] Info: File operation : Moving Out Action 
+[ TUE 16-04-2024 14:03:14 ] Info: Initial state send to the server 
+[ SAT 20-04-2024 11:30:06 ] Info: Initial state send to the server 
+[ SAT 20-04-2024 11:31:04 ] Info: File operation : Creation 
+[ SAT 20-04-2024 11:31:31 ] Info: File operation : Creation 
+[ SAT 20-04-2024 11:31:31 ] Info: File operation : Modification 
+[ SAT 20-04-2024 11:32:16 ] Info: File operation : Moving Out Action 
+[ SAT 20-04-2024 11:37:49 ] Info: File operation : Creation 
+[ SAT 20-04-2024 11:41:39 ] Info: File operation : Creation 
+[ SAT 20-04-2024 11:42:04 ] Info: Initial state send to the server 
+[ SAT 20-04-2024 15:40:23 ] Info: Initial state send to the server 
+[ SAT 20-04-2024 15:41:00 ] Info: File operation : Moving Out Action 
+[ SAT 20-04-2024 15:41:17 ] Info: File operation : Moving Out Action 
+[ SAT 20-04-2024 15:41:53 ] Info: File operation : Moving Out Action 
+[ MON 22-04-2024 10:08:46 ] Info: Initial state send to the server 
+[ MON 22-04-2024 10:12:00 ] Info: Initial state send to the server 
+[ MON 22-04-2024 10:17:02 ] Error: Failled to open the 'data/' directory: 
+[ MON 22-04-2024 10:17:28 ] Warning: The folder 'data/' has no file(s) 
+[ MON 22-04-2024 10:18:47 ] Warning: The folder 'data/' has no file(s) 
+[ MON 22-04-2024 10:19:21 ] Info: Initial state send to the server 
+[ MON 22-04-2024 10:19:42 ] Info: File operation : Creation 
+[ MON 22-04-2024 10:21:25 ] Info: Initial state send to the server 
+[ MON 22-04-2024 10:21:44 ] Info: Initial state send to the server 
+[ MON 22-04-2024 10:28:50 ] Info: Initial state send to the server 
+[ MON 22-04-2024 10:55:58 ] Info: Initial state send to the server 
+[ MON 22-04-2024 10:56:31 ] Info: File operation : Creation 
+[ MON 22-04-2024 11:04:14 ] Info: Initial state send to the server 
+[ MON 22-04-2024 11:04:53 ] Info: File operation : Creation 
+[ MON 22-04-2024 11:05:09 ] Info: File operation : Delection 
+[ MON 22-04-2024 11:09:49 ] Info: Initial state send to the server 
+[ MON 22-04-2024 11:10:08 ] Info: File operation : Creation 
+[ MON 22-04-2024 11:10:34 ] Info: File operation : Delection 
+[ MON 22-04-2024 11:11:19 ] Info: File operation : Creation 
+[ MON 22-04-2024 11:11:41 ] Info: File operation : Creation 
+[ MON 22-04-2024 11:11:59 ] Info: File operation : Delection 
+[ MON 22-04-2024 11:12:08 ] Info: File operation : Delection 
+[ MON 22-04-2024 11:13:15 ] Info: File operation : Creation 
+[ MON 22-04-2024 11:13:34 ] Info: File operation : Creation 
+[ MON 22-04-2024 11:30:30 ] Info: Initial state send to the server 
+[ MON 22-04-2024 11:31:05 ] Info: File operation : Creation 
+[ MON 22-04-2024 11:32:17 ] Info: Initial state send to the server 
+[ MON 22-04-2024 11:32:50 ] Info: Initial state send to the server 
+[ MON 22-04-2024 11:34:39 ] Info: Initial state send to the server 
+[ MON 22-04-2024 11:34:53 ] Info: File operation : Creation 
+[ MON 22-04-2024 11:35:06 ] Info: File operation : Delection 
+[ MON 22-04-2024 11:36:34 ] Info: Initial state send to the server 
+[ MON 22-04-2024 11:36:55 ] Info: File operation : Delection 
+[ MON 22-04-2024 11:38:00 ] Info: File operation : Creation 
+[ MON 22-04-2024 11:38:08 ] Info: File operation : Creation 
+[ MON 22-04-2024 11:38:12 ] Info: File operation : Delection 
+[ MON 22-04-2024 11:38:34 ] Info: File operation : Delection 
+[ MON 22-04-2024 11:44:13 ] Info: Initial state send to the server 
+[ MON 22-04-2024 11:44:31 ] Info: Initial state send to the server 
+[ MON 22-04-2024 11:44:41 ] Info: File operation : Creation 
+[ MON 22-04-2024 11:45:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 11:46:38 ] Info: Initial state send to the server 
+[ MON 22-04-2024 11:46:52 ] Info: File operation : Creation 
+[ MON 22-04-2024 11:47:00 ] Info: File operation : Delection 
+[ MON 22-04-2024 11:47:19 ] Info: File operation : Creation 
+[ MON 22-04-2024 11:47:32 ] Info: File operation : Delection 
+[ MON 22-04-2024 11:47:32 ] Info: File operation : Delection 
+[ MON 22-04-2024 12:00:11 ] Info: File operation : Creation 
+[ MON 22-04-2024 12:00:11 ] Info: File operation : Creation 
+[ MON 22-04-2024 12:00:44 ] Info: File operation : Creation 
+[ MON 22-04-2024 12:01:05 ] Info: File operation : Delection 
+[ MON 22-04-2024 12:01:22 ] Info: Initial state send to the server 
+[ MON 22-04-2024 12:02:06 ] Info: Initial state send to the server 
+[ MON 22-04-2024 12:02:55 ] Info: Initial state send to the server 
+[ MON 22-04-2024 12:03:40 ] Info: File operation : Creation 
+[ MON 22-04-2024 12:05:37 ] Info: Initial state send to the server 
+[ MON 22-04-2024 12:05:58 ] Info: File operation : Delection 
+[ MON 22-04-2024 12:11:59 ] Error: Connexion to the server failled 
+[ MON 22-04-2024 12:12:12 ] Info: Initial state send to the server 
+[ MON 22-04-2024 12:12:33 ] Info: File operation : Creation 
+[ MON 22-04-2024 12:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 12:21:30 ] Info: Initial state send to the server 
+[ MON 22-04-2024 12:25:01 ] Info: Initial state send to the server 
+[ MON 22-04-2024 12:28:06 ] Info: File operation : Creation 
+[ MON 22-04-2024 12:28:19 ] Info: File operation : Creation 
+[ MON 22-04-2024 12:28:27 ] Info: File operation : Creation 
+[ MON 22-04-2024 12:28:36 ] Info: File operation : Creation 
+[ MON 22-04-2024 12:28:46 ] Info: File operation : Delection 
+[ MON 22-04-2024 12:28:55 ] Info: File operation : Creation 
+[ MON 22-04-2024 12:29:02 ] Info: File operation : Creation 
+[ MON 22-04-2024 12:29:59 ] Info: File operation : Creation 
+[ MON 22-04-2024 12:30:41 ] Info: Initial state send to the server 
+[ MON 22-04-2024 12:31:43 ] Info: Initial state send to the server 
+[ MON 22-04-2024 12:32:29 ] Info: Initial state send to the server 
+[ MON 22-04-2024 12:32:36 ] Info: File operation : Creation 
+[ MON 22-04-2024 12:32:53 ] Info: File operation : Creation 
+[ MON 22-04-2024 12:33:07 ] Info: File operation : Delection 
+[ MON 22-04-2024 12:51:23 ] Info: Initial state send to the server 
+[ MON 22-04-2024 12:51:40 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:02:38 ] Info: Initial state send to the server 
+[ MON 22-04-2024 13:03:00 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:03:07 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:04:17 ] Info: Initial state send to the server 
+[ MON 22-04-2024 13:04:25 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:04:40 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:06:33 ] Info: Initial state send to the server 
+[ MON 22-04-2024 13:06:53 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:07:40 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:07:46 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:08:01 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:08:32 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:08:56 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:09:26 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:12:23 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:12:39 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:12:55 ] Info: Initial state send to the server 
+[ MON 22-04-2024 13:13:11 ] Info: Initial state send to the server 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:13:33 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:16:43 ] Info: Initial state send to the server 
+[ MON 22-04-2024 13:17:20 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:18:18 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:18:39 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:19:02 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:19:45 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:44:17 ] Info: Initial state send to the server 
+[ MON 22-04-2024 13:50:07 ] Info: Initial state send to the server 
+[ MON 22-04-2024 13:50:22 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:50:29 ] Info: File operation : Creation 
+[ MON 22-04-2024 13:51:01 ] Info: File operation : Delection 
+[ MON 22-04-2024 13:51:16 ] Info: File operation : Delection 
+[ MON 22-04-2024 14:00:33 ] Info: Initial state send to the server 
+[ MON 22-04-2024 14:00:42 ] Info: File operation : Creation 
+[ MON 22-04-2024 14:00:46 ] Info: File operation : Creation 
+[ MON 22-04-2024 14:00:50 ] Info: File operation : Creation 
+[ MON 22-04-2024 14:01:10 ] Info: File operation : Creation 
+[ MON 22-04-2024 14:01:17 ] Info: File operation : Creation 
+[ MON 22-04-2024 14:01:22 ] Info: Initial state send to the server 
+[ MON 22-04-2024 14:01:31 ] Info: Initial state send to the server 
+[ MON 22-04-2024 14:05:55 ] Info: Initial state send to the server 
+[ MON 22-04-2024 14:06:05 ] Info: File operation : Creation 
+[ MON 22-04-2024 14:11:10 ] Info: Initial state send to the server 
+[ MON 22-04-2024 14:11:25 ] Info: File operation : Creation 
+[ MON 22-04-2024 14:20:24 ] Info: Initial state send to the server 
+[ MON 22-04-2024 14:20:31 ] Info: File operation : Creation 
+[ MON 22-04-2024 14:20:43 ] Info: File operation : Creation 
+[ MON 22-04-2024 14:20:52 ] Info: File operation : Creation 
+[ MON 22-04-2024 14:21:05 ] Info: File operation : Delection 
+[ MON 22-04-2024 14:22:22 ] Info: Initial state send to the server 
+[ MON 22-04-2024 15:02:50 ] Info: Initial state send to the server 
+[ MON 22-04-2024 15:06:24 ] Info: Initial state send to the server 
+[ MON 22-04-2024 15:06:37 ] Info: File operation : Creation 
+[ MON 22-04-2024 15:11:08 ] Info: Initial state send to the server 
+[ MON 22-04-2024 15:11:32 ] Info: File operation : Creation 
+[ MON 22-04-2024 15:16:29 ] Info: Initial state send to the server 
+[ MON 22-04-2024 15:16:51 ] Info: File operation : Creation 
+[ MON 22-04-2024 15:17:08 ] Info: File operation : Creation 
+[ MON 22-04-2024 15:17:23 ] Info: File operation : Creation 
+[ MON 22-04-2024 15:17:36 ] Info: File operation : Delection 
+[ MON 22-04-2024 15:18:02 ] Info: File operation : Creation 
+[ MON 22-04-2024 15:18:30 ] Info: File operation : Delection 
+[ MON 22-04-2024 15:20:47 ] Info: Initial state send to the server 
+[ MON 22-04-2024 15:21:07 ] Info: File operation : Creation 
+[ MON 22-04-2024 15:22:16 ] Info: File operation : Delection 
+[ MON 22-04-2024 15:25:38 ] Info: Initial state send to the server 
+[ MON 22-04-2024 15:25:54 ] Info: File operation : Creation 
+[ MON 22-04-2024 15:26:02 ] Info: File operation : Creation 
+[ MON 22-04-2024 15:26:17 ] Info: File operation : Delection 
+[ MON 22-04-2024 15:28:16 ] Info: File operation : Delection 
+[ MON 22-04-2024 15:28:16 ] Info: File operation : Delection 
+[ MON 22-04-2024 15:28:16 ] Info: File operation : Delection 
+[ MON 22-04-2024 15:28:16 ] Info: File operation : Delection 
+[ MON 22-04-2024 15:28:16 ] Info: File operation : Delection 
+[ MON 22-04-2024 15:28:16 ] Info: File operation : Delection 
+[ MON 22-04-2024 15:28:16 ] Info: File operation : Delection 
+[ MON 22-04-2024 15:28:16 ] Info: File operation : Delection 
+[ MON 22-04-2024 15:28:16 ] Info: File operation : Delection 
+[ MON 22-04-2024 15:28:16 ] Info: File operation : Delection 
+[ MON 22-04-2024 16:04:16 ] Info: Initial state send to the server 
+[ MON 22-04-2024 16:04:28 ] Info: File operation : Creation 
+[ MON 22-04-2024 16:04:57 ] Info: File operation : Delection 
+[ MON 22-04-2024 16:17:26 ] Info: Initial state send to the server 
+[ MON 22-04-2024 16:17:46 ] Info: File operation : Creation 
+[ MON 22-04-2024 16:18:21 ] Info: File operation : Creation 
+[ MON 22-04-2024 16:18:49 ] Info: File operation : Delection 
+[ MON 22-04-2024 16:24:05 ] Info: Initial state send to the server 
+[ MON 22-04-2024 16:24:20 ] Info: File operation : Creation 
+[ MON 22-04-2024 16:24:29 ] Info: File operation : Creation 
+[ MON 22-04-2024 16:24:36 ] Info: File operation : Delection 
+[ MON 22-04-2024 16:29:59 ] Info: Initial state send to the server 
+[ MON 22-04-2024 16:30:10 ] Info: Initial state send to the server 
+[ MON 22-04-2024 16:30:17 ] Info: File operation : Creation 
+[ MON 22-04-2024 16:30:59 ] Info: File operation : Creation 
+[ MON 22-04-2024 16:31:09 ] Info: File operation : Delection 
+[ MON 22-04-2024 16:32:36 ] Info: Initial state send to the server 
+[ MON 22-04-2024 16:32:57 ] Info: File operation : Creation 
+[ MON 22-04-2024 16:34:08 ] Info: File operation : Creation 
+[ MON 22-04-2024 16:36:43 ] Info: Initial state send to the server 
+[ MON 22-04-2024 16:37:14 ] Info: File operation : Creation 
+[ MON 22-04-2024 16:37:29 ] Info: File operation : Creation 
+[ MON 22-04-2024 16:37:50 ] Info: File operation : Delection 
+[ MON 22-04-2024 16:38:43 ] Info: Initial state send to the server 

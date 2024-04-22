@@ -75,8 +75,8 @@ char *ascii_to_utf8(const char *ascii_str) {
 
 
 void replace_log_message(const char *ip_address, const char *new_message) {
-    FILE *file = fopen(FILE_DATA, "r+");
-    if (file == NULL) {
+    FILE *file_data = fopen(FILE_DATA, "r+");
+    if (file_data == NULL) {
         log_action("Failled to open the 'server_data.log' file", "Error");
         perror("Failled to open 'server_data.log' file");
         exit(EXIT_FAILURE);
@@ -94,40 +94,29 @@ void replace_log_message(const char *ip_address, const char *new_message) {
 
     bool ip_found = false;
 
-    while (fgets(line, sizeof(line), file)) {
+    // Copy lines to temp file, replacing the message if the IP is found
+    bool writing_old_message = false;
+    while (fgets(line, sizeof(line), file_data)) {
         if (strstr(line, ip_address) != NULL) {
             ip_found = true;
-            fprintf(temp, "%s", line); // write the finded line in tmp file
-
-            // ignore the lines after the ip's line
-            char line1;
-            while (fgets(line, sizeof(line), file) ){
-                line1 = line[0];
-                if (line1 == '\n' && line[0] != '\n')
-                {
-                    break;
-                }
-                 
-            };
-
-            //write the new message in the tmp file
-            fprintf(temp, "%s", new_message); 
-        } else {
-            fprintf(temp, "%s", line); // write the others lines on tmp file
+            writing_old_message = true;
+        } else if (writing_old_message && strstr(line, "::") != NULL) {
+            writing_old_message = false;
+            fprintf(temp, "%s::\n%s\n\n", ip_address, new_message);
+            fprintf(temp, "%s", line); 
+        } else if (!writing_old_message) {
+            fprintf(temp, "%s", line); // Write other lines to temp file
         }
     }
 
     fprintf(temp, "\0"); 
-    fprintf(file, "\0"); 
-
-    //printf("Bonjour, on est dans la fonction. Value of ip_bound: %s", ip_found ? "true" : "false" );
+    fprintf(file_data, "\0"); 
 
     //Add the new ip and message if its don't exist in the server_data.log
-    if (!ip_found) {
-        fprintf(file, "\n\n%s:\n%s", ip_address, new_message);
-    }
+    fprintf(file_data, "\n\n%s::\n%s", ip_address, new_message);
 
-    fclose(file);
+
+    fclose(file_data);
     fclose(temp);
 
     if (ip_found)
@@ -155,3 +144,4 @@ void replace_log_message(const char *ip_address, const char *new_message) {
     
 
 }
+
