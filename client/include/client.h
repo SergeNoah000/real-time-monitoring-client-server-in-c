@@ -49,7 +49,15 @@
 #define EVENT_SIZE (sizeof(struct inotify_event))
 #define BUF_LEN (1024*(EVENT_SIZE + 16))
 
+#define MAX_FILES 100
 
+// Structure for filereceived information
+struct FileInfo {
+    char ip[INET_ADDRSTRLEN];
+    int size;
+    char filename[256];
+    char modification_date[20];
+};
 
 // the struct that will containts the file informations.
 typedef struct 
@@ -82,5 +90,17 @@ char *file_infos_to_string(file_infos *files, int num_files) ;
 
 //capture all files informations of "data" folder
 char *capture_data();
+
+// share the file information to the server neither stopping nor occupied de console output
+void share_data_contents(int socket_fd);
+
+
+// Display the console diagram of the file sharing system
+void displayDiagram();
+
+
+
+// Function to request and display the list of files available from the server
+void view_files_list(int socket_fd);
 
 #endif

@@ -10,6 +10,7 @@
 
 
 #include "include/client.h"
+#include <sys/signal.h>
 
 /*
     When the client started, it send his data folder and it subfolder files informations
@@ -36,16 +37,15 @@ int main(int argc, char *args[]) {
     }
 
     struct sockaddr_in serv_addr;
-    char *files;
-    char *address, buffer[BUFFER_SIZE] = {0};
+    char *address;
     address = args[1];
     long port = atoi(args[2]);
-    int dir_fd, watcher_dir, sock;
+    int sock;
+    char option;
+    pid_t pid = -1;
 
 
 
-    //capture the actual tree state of "data" folder
-    files = capture_data();
 
 
     
@@ -74,109 +74,72 @@ int main(int argc, char *args[]) {
         exit(EXIT_FAILURE);
     }
 
+     // Display the file sharing system diagram
+    displayDiagram();
 
-    //Send the initial state to the server  
-    send(sock, files, strlen(files), 0);
-    log_action("Initial state send to the server", "Info");
-    printf("Initial state of 'data' folder sent sucessfully.\n");
-    free(files);
-
-
-    // Initialize inotify to monitor changes in the data folder and subfolders
-    dir_fd = inotify_init();
-    if (dir_fd < 0) {
-        log_action("inotify initialization failled, try later", "Error");
-        perror("inotify_init");
-        exit(EXIT_FAILURE);
-    }
-
-    //start watching the "data" folder with inotify
-    watcher_dir = inotify_add_watch(dir_fd, "data", IN_CREATE | IN_DELETE | IN_MODIFY | IN_MOVED_FROM | IN_MOVED_TO);
-    if (watcher_dir < 0) {
-        log_action("inotify watch failled, try later", "Error");
-        perror("inotify_add_watch failled: ");
-        exit(EXIT_FAILURE);
-    }
-
+    // Main program loop
     while (1) {
-        int length = read(dir_fd, buffer, BUF_LEN);
+        printf("\nOptions:\n");
+        printf("1. Share file list with the server\n");
+        printf("2. View the list of files available\n");
+        printf("q. Quit\n");
+        printf("p. Start sharing files with the server\n");
+        printf("s. Stop sharing files with the server\n");
+        printf("Enter your option: ");
+        scanf(" %c", &option);
 
-        if (length < 0) {
-        log_action("inotify read action, try later", "error");
-            perror("read failled: ");
-            exit(EXIT_FAILURE);
-        }
- 
-        int i = 0;
-        while (i < length) {
-            struct inotify_event *event = (struct inotify_event *)&buffer[i];
-            if (event->len) {
-                if (event->mask & IN_CREATE ) {
-                   
-                    // Capture the new tree path of data and subfolders
-                    files = capture_data();
+        switch (option) {
+            case '1':
+                 // Share file list with the server in a new process
+                pid = fork();
+                if (pid == 0) {
+                    // Child process
+                    close(STDOUT_FILENO);  // Close standard output
+                    share_data_contents(sock);
+                    exit(EXIT_SUCCESS);
+                } else if (pid > 0) {
+                    // Parent process
+                    printf("Sharing file list with the server in a new process (PID: %d)\n", pid);
+                    // You can store the child process ID for monitoring and stopping
+                    // Wait for the child process to finish (optional)
+                    // waitpid(pid, NULL, 0);
+                } else {
+                    // Fork failed
+                    perror("Fork failed");
 
-                    // Send it to the server in the specified data format
-                    send(sock, files, strlen(files), 0);
-                    printf("File operation : Creation,  state of 'data/'  sent sucessfully.\n");
-                    free(files);
-                    log_action("File operation : Creation", "Info");
-
-                } else   if (event->mask & IN_DELETE ) {
-
-                    // Capture the new tree path of data and subfolders
-                    files = capture_data();
-
-                    // Send it to the server in the specified data format
-                    send(sock, files, strlen(files), 0);
-                    printf("File operation : Delection,  state of 'data/'  sent sucessfully.\n");
-                    free(files);
-                    log_action("File operation : Delection", "Info");
-
-                }else   if (event->mask & IN_MOVED_FROM ) {
-
-                    // Capture the new tree path of data and subfolders
-                    files = capture_data();
-                    // Send it to the server in the specified data format
-                    send(sock, files, strlen(files), 0);
-                    printf("File operation : Moving Out,  state of 'data/'  sent sucessfully.\n");
-                    free(files);
-                    log_action("File operation : Moving Out Action", "Info");
-
-                } else   if (event->mask & IN_MOVED_TO) {
-                    // Capture the new tree path of data and subfolders
-                    files = capture_data();
-
-                    // Send it to the server in the specified data format
-                    send(sock, files, strlen(files), 0);
-                    printf("File operation : Moving In,  state of 'data/'  sent sucessfully.\n");
-                    free(files);
-                    log_action("File operation : MOving In Action", "Info");
-                }else if (event->mask & IN_MODIFY) {
-                    // Capture the new tree path of data and subfolders
-                    files = capture_data();
-
-                    // Send it to the server in the specified data format
-                    send(sock, files, strlen(files), 0);
-                    printf("File operation : Modification,  state of 'data/'  sent sucessfully.\n");
-                    free(files);
-                    log_action("File operation : Modification", "Info");
-
+            case '2':
+                // View the list of files available
+                view_files_list(sock);
+                break;
+            case 'q':
+                // Quit the program
+                close(sock);
+                exit(EXIT_SUCCESS);
+            // case 'p':
+            //     // Start sharing files with the server
+            //     // Add code to initiate file sharing with the server
+            //     break;
+            case 's':
+                // Stop sharing files with the server
+                if (pid > 0) {
+                    // Send SIGTERM to the child process
+                    kill(pid, SIGTERM);
+                    printf("Stopped sharing files with the server (PID: %d)\n", pid);
+                    pid = -1;  // Reset pid to an invalid value
+                } else {
+                    printf("No sharing process is currently running\n");
                 }
-                i += EVENT_SIZE + event->len;
-            }
+                break;
+            default:
+                printf("Invalid option. Please try again.\n");
         }
     }
-    
 
-        // Réception de données du serveur
-        // recv(sock, buffer, BUFFER_SIZE, 0);
-        // printf("Réponse %d du serveur: %s\n\n", i, buffer);
-	
-        // Fermeture du socket
-        close(sock);
+    return 0;
+    
 
 
     return 0;
 } 
 
+}
