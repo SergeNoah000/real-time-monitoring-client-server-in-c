@@ -152,43 +152,49 @@ void *handle_connection(void ) {
 
 
         while(true){
-        ssize_t bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);
-        if (bytes_received <= 0) {
-            close(client_socket);
-            char log_message[512];
-            sprintf(log_message, "Connexion with client %s:%d lost", inet_ntoa(client_address.sin_addr), ntohs(client_address.sin_port));
-            clear_last_lines(1);
-            fprintf(stdout,"%s\n",  log_message);
-            log_action(log_message, "Warning");
+            ssize_t bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);
+            if (bytes_received <= 0) {
+                close(client_socket);
+                char log_message[512];
+                sprintf(log_message, "Connexion with client %s:%d lost", inet_ntoa(client_address.sin_addr), ntohs(client_address.sin_port));
+                clear_last_lines(1);
+                fprintf(stdout,"%s\n",  log_message);
+                log_action(log_message, "Warning");
 
-            pthread_mutex_lock(&mutex);
-            active_threads--;
-            pthread_mutex_unlock(&mutex);
-            break;
-        }
+                pthread_mutex_lock(&mutex);
+                active_threads--;
+                pthread_mutex_unlock(&mutex);
+                break;
+            }
 
-        clear_last_lines(1);
+            if (strcmp(buffer, "LIST_FILES") == 0)
+            {
+                printf("Requested list files");
+                read_and_send_files_infos(FILE_DATA, client_socket);
+            }else
+            {
+            
+                clear_last_lines(1);
+                time_t date_t = time(NULL);
+                char *str_date = malloc(sizeof(char) * 30);
+                convert_time(str_date, sizeof(date_t ) * 4, date_t);
+                printf("[ %s ] Received data from client %s:%d:\n",str_date, inet_ntoa(client_address.sin_addr),
+                    ntohs(client_address.sin_port));
+                
+                free(str_date);
 
-        time_t date_t = time(NULL);
-        char *str_date = malloc(sizeof(char) * 30);
-        convert_time(str_date, sizeof(date_t ) * 4, date_t);
-        printf("[ %s ] Received data from client %s:%d:\n",str_date, inet_ntoa(client_address.sin_addr),
-               ntohs(client_address.sin_port));
-        
-        free(str_date);
+                char *data = ascii_to_utf8(buffer);
 
-        char *data = ascii_to_utf8(buffer);
-
-        // Log the received datas        
-        pthread_mutex_lock(&mutex);
-        replace_log_message(inet_ntoa(client_address.sin_addr), data);
-        pthread_mutex_unlock(&mutex);
-        char *message;
-        message = malloc(sizeof(char) * 70);
-        sprintf(message, "Update 'server_data.log' caused by client  ``%s`` ", inet_ntoa(client_address.sin_addr));
-        log_action(message, "Info");
-        free(message);
-
+                // Log the received datas        
+                pthread_mutex_lock(&mutex);
+                replace_log_message(inet_ntoa(client_address.sin_addr), data);
+                pthread_mutex_unlock(&mutex);
+                char *message;
+                message = malloc(sizeof(char) * 70);
+                sprintf(message, "Update 'server_data.log' caused by client  ``%s`` ", inet_ntoa(client_address.sin_addr));
+                log_action(message, "Info");
+                free(message);
+            }
         }
         // pthread_mutex_lock(&mutex);
         // active_threads--;

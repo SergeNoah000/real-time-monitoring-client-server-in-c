@@ -145,3 +145,96 @@ void replace_log_message(const char *ip_address, const char *new_message) {
 
 }
 
+
+
+
+
+// Function to read and format the content of the file
+void read_and_send_files_infos(const char *filename, int socket_fd) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        perror("Error opening file");
+        exit(EXIT_FAILURE);
+    }
+
+    char line[512]; // Increased buffer size to accommodate lines
+    int file_count = 0;
+    long file_size = 0;
+
+    // Counting the number of lines in the file
+    while (fgets(line, sizeof(line), file)) {
+        // Ignore empty lines
+        if (strlen(line) > 1)
+            file_count++;
+            file_size += strlen(line);
+
+    }
+
+
+    // send the length of the data
+    printf("The size of the data is %d\n", file_size);
+    ssize_t byte_sent = send(socket_fd, &file_size, sizeof(file_size), 0);
+    if (byte_sent == -1){
+        log_action("Failed to send the length of the data", "Error");
+        perror("Failed to send the length of the data");
+        exit(EXIT_FAILURE);
+    }
+
+    // Reset the file pointer to the beginning of the file
+    fseek(file, 0, SEEK_SET);
+
+    // Allocate memory dynamically for the array of FileInfo structures
+    struct FileInfoToSend *files = malloc(file_count * sizeof(struct FileInfoToSend));
+    if (files == NULL) {
+        log_action("Failled to allocate the memory of FileInfoToSend", "Error");
+        perror("Error allocating memory");
+        exit(EXIT_FAILURE);
+    }
+
+    // Read and process each line of the file
+    int i, current_file_index = -1;
+    char current_ip[25] = {0};
+    while (fgets(line, sizeof(line), file)) {
+        // Ignore empty lines
+        if (strlen(line) <= 1)
+            continue;
+
+        // Remove the newline character at the end
+        line[strcspn(line, "\n")] = '\0';
+
+        // If the line starts with "::", it's a new IP section
+        if (strstr(line, "::") != NULL) {
+            // Increment the file index and copy the IP address
+            strcpy(current_ip, strtok(line, "::"));
+        } else {
+            // Otherwise, it's a file information line
+            sscanf(line, "%s %d %[A-Za-z0-9 -:]",
+                   files[current_file_index].filename,
+                   &files[current_file_index].size,
+                   files[current_file_index].modification_date);
+            
+            strcpy(files[current_file_index].ip, current_ip);
+            current_file_index++;
+        }
+    }
+
+    // fclose(file);
+
+    // Display the formatted files
+    for ( i = 0; i < current_file_index ; i++) { 
+        char ligne[1024] = {0};  
+        sprintf(ligne,"%s | %d | %s | %s \n", files[i].ip, files[i].size, files[i].filename, files[i].modification_date);
+        printf("%s\n", ligne);
+        send(socket_fd, ligne, strlen(ligne), 0) ;
+    }
+    printf(" Transfert de la liste fini !\n");
+    send(socket_fd, "finished", strlen("finished"), 0) ;
+
+    // Free dynamically allocated memory
+
+    free(files);
+
+    return;
+}
+
+

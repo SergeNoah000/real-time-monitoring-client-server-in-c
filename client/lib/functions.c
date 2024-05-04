@@ -317,8 +317,7 @@ void displayDiagram() {
 
 // Function to display the list of files
 void view_files_list(int sock) {
-    char buffer[BUFFER_SIZE];
-    int bytes_received;
+    char *buffer;
 
     // Sending request to the server
     char *request = "LIST_FILES";
@@ -326,14 +325,38 @@ void view_files_list(int sock) {
 
     // Array to store file information
     struct FileInfo files[MAX_FILES];
-    int file_count = 0;
+
+    // buffer size to receive from the server
+    int  file_count = 0;
+    long bf_size;
+
+    // receive bf_size bytes from the server
+    ssize_t bytes_received = recv(sock, &bf_size, sizeof(long), 0);
+    if (bytes_received != sizeof(long)) {
+        log_action("Error occurs when recv the size of the buffer ", "Error");
+        perror("Error occurs when recv the size of the buffer ");
+        exit(EXIT_FAILURE);
+    }
+
+
+
+    // allocate the buffer to store the received data
+    buffer = (char *) malloc(bf_size * sizeof(char));
+
+    if(buffer == NULL){
+        log_action("Error", "Failed to allocate buffer");
+        perror("Error: Failed to allocate buffer");
+        exit(EXIT_FAILURE);
+
+    }
 
     // Receiving the list of files from the server
-    while ((bytes_received = recv(sock, buffer, BUFFER_SIZE, 0)) > 0) {
+    while ((bytes_received = recv(sock, buffer, bf_size, 0)) > 0 && strcmp(buffer, "finished") != 0) {
         // Parsing and storing each line of the response
+    printf("suffer_size to receive: %ld\n", bf_size);
         char *token = strtok(buffer, "\n");
         while (token != NULL && file_count < MAX_FILES) {
-            sscanf(token, "%s %d %s %s",
+            sscanf(token, "%s | %d | %s | %s",
                    files[file_count].ip,
                    &files[file_count].size,
                    files[file_count].filename,
@@ -341,7 +364,7 @@ void view_files_list(int sock) {
             token = strtok(NULL, "\n");
             file_count++;
         }
-
+    }
         // Displaying the list of files with index, name, and modification date
         printf("Index\tFilename\tSize (Mo)\tModification Date\n");
         printf("-------------------------------------------------\n");
@@ -364,7 +387,7 @@ void view_files_list(int sock) {
         // Sending the request again to get a new list
         printf("\n");
         send(sock, request, strlen(request), 0);
-    }
+    
 
     // Handling receive errors
     if (bytes_received == -1) {

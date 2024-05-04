@@ -41,6 +41,14 @@ typedef struct {
 } file_infos;
 
 
+// Structure for file information
+struct FileInfoToSend {
+    char ip[16]; // As it's an IPv4 address
+    int size;
+    char filename[256];
+    char modification_date[32]; // Increased buffer size to accommodate date and time
+};
+
 
 
 
@@ -69,6 +77,8 @@ void replace_log_message(const char *ip_address, const char *new_message);
 
 
 
+// Function to read and send  formated content to the client
+void read_and_send_files_infos(const char *filename, int socket_fd) ;
 
 
 #endif  //SERVER_H
