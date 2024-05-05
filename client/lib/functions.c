@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include "../include/client.h"
+#include <stdbool.h>
 
 
 
@@ -312,7 +313,74 @@ void displayDiagram() {
 
 
 
+/// @brief Download filename to another client ip given
+/// @param filename : Filename to download
+/// @param ip : Client IP
+/// @return int Returns 0 if successful otherwise returns -1
+int downloade_file(char *filename, char * ip){
+    //create socket
 
+     struct sockaddr_in serv_addr;
+    char *address;
+    address = ip;
+    long port = 7070;
+    int sock;
+
+    // Creating socket file descriptor
+    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+        log_action("Creating socket file failled", "Danger");
+        perror("Erreur lors de la création du socket\n");
+        return -1;
+    }
+
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(port);
+
+    // Convert the IP server address to binary format
+    if (inet_pton(AF_INET, address, &serv_addr.sin_addr) <= 0) {
+        log_action("Invalid IP ADDRESS of other client \n", "Errro");
+        perror("Invalid IP ADDRESS of other client  / NOt supported IP !");
+        return -1;
+    }
+
+    // Connection to the server
+    if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
+        log_action("Connexion to the other client failled", "Error");
+        perror("Connexion to the  client failled");
+        return -1;
+    }
+
+    if (send(sock, filename, sizeof(filename), 0) == -1) {
+        char message[MAX_FILE_SIZE];
+        sprintf(message, "Failled to send the filename %s the client %s", filename, ip);
+        log_action(message, "Error");
+        return -1;
+    }
+
+    int n;
+    FILE *fp;
+    char *path[MAX_FILE_SIZE] ;
+    sprintf(path, "Downloads/%s", filename);
+    char buffer[BUFFER_SIZE];
+
+    fp = fopen(path, "w");
+    while (1) {
+        n = recv(sock, buffer, sizeof(buffer), 0);
+        if (n <= 0){
+        break;
+        return;
+        }
+        fprintf(fp, "%s", buffer);
+        bzero(buffer, BUFFER_SIZE);
+    }
+     char message[MAX_FILE_SIZE];
+    sprintf(message, "Receiving file '%s' from '%S'", filename, ip);
+    log_action(message, "Info");
+
+    close(sock);
+    return 0;
+
+}
 
 
 // Function to display the list of files
@@ -369,7 +437,7 @@ void view_files_list(int sock) {
         printf("Index\tFilename\tSize (Mo)\tModification Date\n");
         printf("-------------------------------------------------\n");
         for (int i = 0; i < file_count; i++) {
-            printf("%d\t%s\t\t%d\t\t%s\n", i + 1,
+            printf("%d\t%s\t\t%d\t\t%s\n", i ,
                    files[i].filename,
                    files[i].size,
                    files[i].modification_date);
@@ -381,81 +449,159 @@ void view_files_list(int sock) {
         scanf("%d", &file_index);
 
         // Code to download the file with the given index
-        // To be implemented according to your specific application logic
-        printf("Downloading file with index %d...\n", file_index);
+        printf("\n\n\n Downloading file %s with index %d...\n", files[file_index].filename,  file_index);
 
-        // Sending the request again to get a new list
-        printf("\n");
-        send(sock, request, strlen(request), 0);
-    
+        // Code to download the file with the given index file
+        if ( downloade_file(files[file_index].filename, files[file_index].ip) == -1 ){
+            //log_action("Failling in the download_file function", "Error");
+            char message[1024];
+            sprintf(message, "Error downloading file %s from %s", files[file_index].filename, files[file_index].ip);
+            printf(message);
+            log_action(message, "Error");
+            perror("Error downloading file");
+            return;
+        }
+        char message[1024];
+        sprintf(message, "downloading file %s from %s finished", files[file_index].filename, files[file_index].ip);
+        log_action(message, "Success");
+        printf("Downloading file %s. finished. Your file is available in the Downloads/ folder. \n", files[file_index].filename);
+        return;
+}
 
-    // Handling receive errors
-    if (bytes_received == -1) {
-        perror("recv");
+// Return relative path from  the caller dir and filename
+/// @brief 
+/// @param dir_path 
+/// @param filename 
+/// @return char *
+char *search_file(const char *dir_path, const char *filename) {
+    DIR *dir;
+    struct dirent *entry;
+    struct stat statbuf;
+    char *filepath = NULL;
+
+    dir = opendir(dir_path);
+    if (dir == NULL) {
+        perror("Erreur lors de l'ouverture du répertoire");
+        return NULL;
+    }
+
+    while ((entry = readdir(dir)) != NULL) {
+        char path[1024];
+        snprintf(path, sizeof(path), "%s/%s", dir_path, entry->d_name);
+
+        if (strcmp(entry->d_name, filename) == 0) {
+            filepath = strdup(path);
+            break;
+        }
+
+        if (stat(path, &statbuf) == -1) {
+            perror("Erreur lors de la récupération des informations sur le fichier");
+            continue;
+        }
+
+        if (S_ISDIR(statbuf.st_mode)) {
+            if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
+                continue;
+            }
+            char *sub_filepath = search_file(path, filename);
+            if (sub_filepath != NULL) {
+                filepath = sub_filepath;
+                break;
+            }
+        }
+    }
+
+    closedir(dir);
+    return filepath;
+}
+
+
+
+int send_file(char *fp, int sockfd){
+  int n;
+  char data[BUFFER_SIZE] = {0};
+
+  while(fgets(data, BUFFER_SIZE, fp) != NULL) {
+    if (send(sockfd, data, sizeof(data), 0) == -1) {
+        log_action("Failled to send the data file", "Error");
+        perror("Error in sending file.");
+        return 0;
+    }
+    bzero(data, BUFFER_SIZE);
+  }
+  return 1;
+}
+
+
+
+void upload_file(){
+    int other_client_sockef_fd, new_socket;
+    struct sockaddr_in address;
+    int opt = 1;
+
+    if ((other_client_sockef_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
+        log_action("Creating socket file failled", "Danger");
+        perror("socket creation failed");
         exit(EXIT_FAILURE);
     }
+
+    if (setsockopt(other_client_sockef_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))) {
+        log_action("setsockopt failled", "Error");
+        perror("setsockopt error");
+        exit(EXIT_FAILURE);
+    }
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(7070);
+
+    if (bind(other_client_sockef_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
+        log_action("Binding of port to the sokcket failled ", "Error");
+        perror("Binding port failed");
+        exit(EXIT_FAILURE);
+    }
+
+    if (listen(other_client_sockef_fd, 300) < 0) {
+        log_action("Listen operation error", "Danger");
+        perror("listen");
+        exit(EXIT_FAILURE);
+    }
+
+    log_action("Start listening the incomming upload request", "Info");
+
+    while(true){
+        if (new_socket = accept(other_client_sockef_fd, (struct sockaddr*)&address, sizeof(address))<0){
+                log_action("Failled to accept incomming request", "Error");
+                perror("accepting the incomming upload request");
+                exit(EXIT_FAILURE);
+            }
+            char filename[150] = {0};
+            ssize_t bytes_received = recv(new_socket, filename, BUFFER_SIZE, 0);
+            if( bytes_received == -1 ){
+                log_action("Failled receive the incomming request filename", "Error");
+                perror("recv the incomming request filename");
+                exit(EXIT_FAILURE);
+            }
+
+            char *filepath = search_file("data", filename);
+            if (filepath == NULL) {
+                log_action("Failled to find the incomming request file", "Error");
+                send(new_socket, NULL, sizeof(NULL), 0);
+                exit(EXIT_FAILURE);
+            }
+
+            if( send_file(filepath, new_socket) == 0 ) {
+                log_action("It occurs when trying to send the requested file", "Error");
+                perror("Error sending");
+                break;
+
+            }
+            sprintf(filepath, "Sucessfully send  %s to %s", filename, inet_ntoa(address.sin_addr));
+            log_action(filepath, "Sucess");
+
+            close(new_socket);
+
+    }
+    
+
 }
-
-
-
-
-
-
-
-/*
-void view_files_list(int socket_fd) {
-    char buffer[BUFFER_SIZE] = {0};
-
-    // Send request to the server to get the list of files
-    send(socket_fd, "get_file_list", strlen("get_file_list"), 0);
-    printf("Request sent to the server to get the list of files\n");
-
-    // Receive the list of files from the server
-    recv(socket_fd, buffer, BUFFER_SIZE, 0);
-    printf("Received file list from the server\n");
-
-    // Parse the received JSON data
-    cJSON *root = cJSON_Parse(buffer);
-    if (root == NULL) {
-        log_action("Failed to parse JSON data received from the server", "Error");
-        perror("Failed to parse JSON data received from the server");
-        return;
-    }
-
-    // Display the list of files with their index, name, and last modification date
-    cJSON *client_files = cJSON_GetObjectItem(root, "ip_client");
-    int index = 0;
-    cJSON *client_file;
-    cJSON_ArrayForEach(client_file, client_files) {
-        cJSON *file_name = cJSON_GetObjectItem(client_file, "nom_fichier");
-        cJSON *file_size = cJSON_GetObjectItem(client_file, "taille");
-        cJSON *file_last_modified = cJSON_GetObjectItem(client_file, "dernier_date_modification");
-        printf("%d. Name: %s, Size: %s, Last Modified: %s\n", index, file_name->valuestring, file_size->valuestring, file_last_modified->valuestring);
-        index++;
-    }
-
-    // Prompt the user to enter the index of the file to download
-    int selected_index;
-    printf("Enter the index of the file to download (Ctrl+C to return to the previous menu): ");
-    scanf("%d", &selected_index);
-
-    // Get the selected file from the JSON data
-    cJSON *selected_file = cJSON_GetArrayItem(client_files, selected_index);
-    if (selected_file == NULL) {
-        printf("Invalid index\n");
-        return;
-    }
-
-    cJSON *file_name = cJSON_GetObjectItem(selected_file, "nom_fichier");
-    printf("Selected file to download: %s\n", file_name->valuestring);
-
-    // Download the selected file from the server (implementation not provided)
-    // Add code to download the selected file from the server
-
-    // Free the cJSON root object
-    cJSON_Delete(root);
-}
-
-
-*/
 

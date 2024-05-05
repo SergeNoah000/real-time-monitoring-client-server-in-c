@@ -103,4 +103,21 @@ void displayDiagram();
 // Function to request and display the list of files available from the server
 void view_files_list(int socket_fd);
 
+// Return relative path from  the caller dir and filename
+/// @brief 
+/// @param char * dir_path 
+/// @param char * filename 
+/// @return char *
+char *search_file(const char *dir_path, const char *filename) ;
+
+
+/// @brief Send the specified file to the specified socket
+/// @param fp : relative path to the file
+/// @param sockfd : socket to send the file
+/// @return int : 1 if successful, 0 otherwise
+int send_file(char *fp, int sockfd);
+
+
+// start listening for the the download demand and serve it
+void upload_file();
 #endif

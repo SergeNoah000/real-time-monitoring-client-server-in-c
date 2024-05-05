@@ -11,7 +11,7 @@
 
 #include "include/client.h"
 #include <sys/signal.h>
-
+#include "pthread.h"
 /*
     When the client started, it send his data folder and it subfolder files informations
     after receive the acknowledge, it start watch the change on data folder and his subfolders.
@@ -95,6 +95,10 @@ int main(int argc, char *args[]) {
                 if (pid == 0) {
                     // Child process
                     close(STDOUT_FILENO);  // Close standard output
+
+                    // start listening incomming requests in background
+                    pthread_t thread;
+                    pthread_create(&thread, NULL, upload_file, sock);
                     share_data_contents(sock);
                     exit(EXIT_SUCCESS);
                 } else if (pid > 0) {
@@ -137,9 +141,6 @@ int main(int argc, char *args[]) {
 
     return 0;
     
-
-
-    return 0;
 } 
 
 }
