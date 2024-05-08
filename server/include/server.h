@@ -42,12 +42,12 @@ typedef struct {
 
 
 // Structure for file information
-struct FileInfoToSend {
+typedef struct  {
     char ip[16]; // As it's an IPv4 address
-    int size;
+    size_t size;
     char filename[256];
-    char modification_date[32]; // Increased buffer size to accommodate date and time
-};
+    char modification_date[42]; 
+}FileInfo;
 
 
 

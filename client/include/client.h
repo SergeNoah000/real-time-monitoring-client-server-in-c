@@ -52,12 +52,12 @@
 #define MAX_FILES 100
 
 // Structure for filereceived information
-struct FileInfo {
+typedef struct  {
     char ip[INET_ADDRSTRLEN];
-    int size;
+    size_t size;
     char filename[256];
-    char modification_date[20];
-};
+    char modification_date[42];
+}FileInfo;
 
 // the struct that will containts the file informations.
 typedef struct 
@@ -119,5 +119,5 @@ int send_file(char *fp, int sockfd);
 
 
 // start listening for the the download demand and serve it
-void upload_file();
+void *upload_file();
 #endif

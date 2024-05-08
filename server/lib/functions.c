@@ -157,7 +157,7 @@ void read_and_send_files_infos(const char *filename, int socket_fd) {
         exit(EXIT_FAILURE);
     }
 
-    char line[512]; // Increased buffer size to accommodate lines
+    char line[512]; 
     int file_count = 0;
     long file_size = 0;
 
@@ -171,20 +171,12 @@ void read_and_send_files_infos(const char *filename, int socket_fd) {
     }
 
 
-    // send the length of the data
-    printf("The size of the data is %d\n", file_size);
-    ssize_t byte_sent = send(socket_fd, &file_size, sizeof(file_size), 0);
-    if (byte_sent == -1){
-        log_action("Failed to send the length of the data", "Error");
-        perror("Failed to send the length of the data");
-        exit(EXIT_FAILURE);
-    }
 
     // Reset the file pointer to the beginning of the file
     fseek(file, 0, SEEK_SET);
 
     // Allocate memory dynamically for the array of FileInfo structures
-    struct FileInfoToSend *files = malloc(file_count * sizeof(struct FileInfoToSend));
+     FileInfo *files = malloc(file_count * sizeof(FileInfo));
     if (files == NULL) {
         log_action("Failled to allocate the memory of FileInfoToSend", "Error");
         perror("Error allocating memory");
@@ -192,7 +184,7 @@ void read_and_send_files_infos(const char *filename, int socket_fd) {
     }
 
     // Read and process each line of the file
-    int i, current_file_index = -1;
+    int i, current_file_index = 0;
     char current_ip[25] = {0};
     while (fgets(line, sizeof(line), file)) {
         // Ignore empty lines
@@ -208,7 +200,7 @@ void read_and_send_files_infos(const char *filename, int socket_fd) {
             strcpy(current_ip, strtok(line, "::"));
         } else {
             // Otherwise, it's a file information line
-            sscanf(line, "%s %d %[A-Za-z0-9 -:]",
+            sscanf(line, "%s %ld %[A-Za-z0-9 -:]",
                    files[current_file_index].filename,
                    &files[current_file_index].size,
                    files[current_file_index].modification_date);
@@ -218,21 +210,22 @@ void read_and_send_files_infos(const char *filename, int socket_fd) {
         }
     }
 
-    // fclose(file);
+    fclose(file);
 
-    // Display the formatted files
-    for ( i = 0; i < current_file_index ; i++) { 
-        char ligne[1024] = {0};  
-        sprintf(ligne,"%s | %d | %s | %s \n", files[i].ip, files[i].size, files[i].filename, files[i].modification_date);
-        printf("%s\n", ligne);
-        send(socket_fd, ligne, strlen(ligne), 0) ;
+      // Send number of files
+    if (send(socket_fd, &current_file_index, sizeof(current_file_index), 0) != sizeof(current_file_index)) {
+        perror("Send failed");
+        exit(EXIT_FAILURE);
     }
-    printf(" Transfert de la liste fini !\n");
-    send(socket_fd, "finished", strlen("finished"), 0) ;
+    printf("Nombre de fichier de la liste: %d", current_file_index);
+    // Send each file info
+    for (int i = 0; i < current_file_index; ++i) {
+        if (send(socket_fd, &files[i], sizeof(FileInfo ), 0) != sizeof( FileInfo)) {
+            perror("Send failed");
+            exit(EXIT_FAILURE);
+        }
+    }
 
-    // Free dynamically allocated memory
-
-    free(files);
 
     return;
 }

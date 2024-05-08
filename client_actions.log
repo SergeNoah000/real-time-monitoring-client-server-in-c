@@ -509,3 +509,84 @@
 [ SUN 05-05-2024 23:53:32 ] Info: Receiving file 'niki-junoir' from ' 
 [ SUN 05-05-2024 23:53:32 ] Success: downloading file niki-junoir from 127.8.0.1 finished 
 [ SUN 05-05-2024 23:53:32 ] Error: Failled to accept incomming request 
+[ MON 06-05-2024 10:32:18 ] Info: Start listening the incomming upload request 
+[ MON 06-05-2024 10:32:18 ] Info: Initial state send to the server 
+[ MON 06-05-2024 10:35:06 ] Info: File operation : Modification 
+[ MON 06-05-2024 10:36:03 ] Error: Connexion to the other client failled 
+[ MON 06-05-2024 10:36:03 ] Error: Error downloading file ned.tx from 127.4.0.1 
+[ MON 06-05-2024 10:36:27 ] Error: Connexion to the server failled 
+[ MON 06-05-2024 10:36:42 ] Info: Start listening the incomming upload request 
+[ MON 06-05-2024 10:36:42 ] Info: Initial state send to the server 
+[ MON 06-05-2024 10:37:37 ] Error: Failled to accept incomming request 
+[ MON 06-05-2024 10:37:37 ] Info: Receiving file 'Dockerfile' from ' 
+[ MON 06-05-2024 10:37:37 ] Success: downloading file Dockerfile from 127.4.0.1 finished 
+[ MON 06-05-2024 10:38:59 ] Info: Start listening the incomming upload request 
+[ MON 06-05-2024 10:38:59 ] Info: Initial state send to the server 
+[ MON 06-05-2024 10:39:18 ] Errro: Invalid IP ADDRESS of other client 
+ 
+[ MON 06-05-2024 10:39:18 ] Error: Error downloading file  from :23 
+[ TUE 07-05-2024 22:53:11 ] Error: Connexion to the server failled 
+[ WED 08-05-2024 00:19:16 ] Error: Connexion to the server failled 
+[ WED 08-05-2024 00:23:55 ] Error: Connexion to the other client failled 
+[ WED 08-05-2024 00:23:55 ] Error: Error downloading file mike from 127.8.0.1 
+[ WED 08-05-2024 00:26:58 ] Error: Connexion to the server failled 
+[ WED 08-05-2024 00:32:56 ] Error: Connexion to the other client failled 
+[ WED 08-05-2024 00:32:56 ] Error: Error downloading file bjr.tex from 127.8.0.1 
+[ WED 08-05-2024 00:35:00 ] Error: Connexion to the other client failled 
+[ WED 08-05-2024 00:35:00 ] Error: Error downloading file niki-junoir from 127.4.0.1 
+[ WED 08-05-2024 00:38:00 ] Error: Connexion to the other client failled 
+[ WED 08-05-2024 00:38:00 ] Error: Error downloading file moi-moche from 127.4.0.1 
+[ WED 08-05-2024 00:38:26 ] Info: Initial state send to the server 
+[ WED 08-05-2024 00:38:26 ] Info: Start listening the incomming upload request 
+[ WED 08-05-2024 00:38:48 ] Info: Initial state send to the server 
+[ WED 08-05-2024 00:38:48 ] Info: Start listening the incomming upload request 
+[ WED 08-05-2024 00:39:57 ] Error: Failled to accept incomming request 
+[ WED 08-05-2024 00:39:57 ] Info: Receiving file 'moi-moche' from '127.4.0.1' 
+[ WED 08-05-2024 00:39:57 ] Success: downloading file moi-moche from 127.4.0.1 finished 
+[ WED 08-05-2024 00:42:59 ] Info: Start listening the incomming upload request 
+[ WED 08-05-2024 00:42:59 ] Info: Initial state send to the server 
+[ WED 08-05-2024 00:43:48 ] Error: Failled to accept incomming request 
+[ WED 08-05-2024 00:43:48 ] Info: Receiving file 'mamelon' from '127.0.0.1' 
+[ WED 08-05-2024 00:43:48 ] Success: downloading file mamelon from 127.0.0.1 finished 
+[ WED 08-05-2024 00:44:45 ] Info: Start listening the incomming upload request 
+[ WED 08-05-2024 00:44:45 ] Info: Initial state send to the server 
+[ WED 08-05-2024 00:45:32 ] Error: Failled to accept incomming request 
+[ WED 08-05-2024 00:45:32 ] Info: Receiving file 'moi-moche' from '127.0.0.1' 
+[ WED 08-05-2024 00:45:32 ] Success: downloading file moi-moche from 127.0.0.1 finished 
+[ WED 08-05-2024 00:47:39 ] Info: Start listening the incomming upload request 
+bjr.tex 0.00 MON 22-04-2024 10:19:18
+new_file.txt 0.00 MON 22-04-2024 12:00:11
+niki-junoir 0.00 MON 22-04-2024 16:17:46
+mechant 0.00 MON 22-04-2024 16:30:17
+testi.log 0.00 MON 22-04-2024 10:56:31
+new_file8.txt 0.00 MON 22-04-2024 11:13:15
+mechant5 0.00 MON 22-04-2024 16:37:29
+Dockerfile 0.00 MON 22-04-2024 15:17:23
+mechant3 0.00 MON 22-04-2024 16:34:08
+philadepli 0.00 MON 22-04-2024 15:11:32
+test.txt 0.00 MON 22-04-2024 10:19:42
+ned.tx 0.00 MON 06-05-2024 10:35:11
+babla 0.00 MON 22-04-2024 15:17:08
+mamelon 0.00 MON 22-04-2024 16:04:28
+mechant1 0.00 MON 22-04-2024 16:32:57
+moi-moche 0.00 WED 08-05-2024 00:37:08
+mike 0.00 MON 22-04-2024 15:06:37
+[ WED 08-05-2024 00:47:39 ] Info: Initial state send to the server 
+[ WED 08-05-2024 00:49:17 ] Error: Failled to accept incomming request 
+[ WED 08-05-2024 00:49:17 ] Info: Receiving file 'new_file.txt' from '127.0.1.1' 
+[ WED 08-05-2024 00:49:17 ] Success: downloading file new_file.txt from 127.0.1.1 finished 
+[ WED 08-05-2024 00:49:57 ] Info: Start listening the incomming upload request 
+[ WED 08-05-2024 00:49:57 ] Info: Initial state send to the server 
+[ WED 08-05-2024 00:50:17 ] Error: Failled to accept incomming request 
+[ WED 08-05-2024 00:50:17 ] Info: Receiving file 'new_file8.txt' from '127.0.1.1' 
+[ WED 08-05-2024 00:50:17 ] Success: downloading file new_file8.txt from 127.0.1.1 finished 
+[ WED 08-05-2024 00:51:07 ] Info: Start listening the incomming upload request 
+[ WED 08-05-2024 00:51:07 ] Info: Initial state send to the server 
+[ WED 08-05-2024 00:51:21 ] Error: Failled to accept incomming request 
+[ WED 08-05-2024 00:51:21 ] Info: Receiving file 'bjr.tex' from '127.0.0.1' 
+[ WED 08-05-2024 00:51:21 ] Success: downloading file bjr.tex from 127.0.0.1 finished 
+[ WED 08-05-2024 01:02:27 ] Info: Start listening the incomming upload request 
+[ WED 08-05-2024 01:02:27 ] Info: Initial state send to the server 
+[ WED 08-05-2024 01:02:37 ] Error: Failled to find the incomming request file 
+[ WED 08-05-2024 01:02:37 ] Info: Receiving file 'moi-moche' from '127.0.1.1' 
+[ WED 08-05-2024 01:02:37 ] Success: downloading file moi-moche from 127.0.1.1 finished 

@@ -79,7 +79,7 @@ int main(int argc, char *args[]) {
 
     // Main program loop
     while (1) {
-        printf("\nOptions:\n");
+        printf("\n\nOptions:\n");
         printf("1. Share file list with the server\n");
         printf("2. View the list of files available\n");
         printf("q. Quit\n");
@@ -98,18 +98,21 @@ int main(int argc, char *args[]) {
 
                     // start listening incomming requests in background
                     pthread_t thread;
-                    pthread_create(&thread, NULL, upload_file, sock);
+                    pthread_create(&thread, NULL, upload_file, &sock);
                     share_data_contents(sock);
-                    exit(EXIT_SUCCESS);
+                    break;
                 } else if (pid > 0) {
                     // Parent process
                     printf("Sharing file list with the server in a new process (PID: %d)\n", pid);
                     // You can store the child process ID for monitoring and stopping
                     // Wait for the child process to finish (optional)
                     // waitpid(pid, NULL, 0);
+                    break;
                 } else {
                     // Fork failed
                     perror("Fork failed");
+                    break;
+                }
 
             case '2':
                 // View the list of files available
@@ -142,5 +145,3 @@ int main(int argc, char *args[]) {
     return 0;
     
 } 
-
-}

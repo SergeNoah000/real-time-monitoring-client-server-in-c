@@ -359,7 +359,7 @@ int downloade_file(char *filename, char * ip){
 
     int n;
     FILE *fp;
-    char *path[MAX_FILE_SIZE] ;
+    char path[MAX_FILE_SIZE] ;
     sprintf(path, "Downloads/%s", filename);
     char buffer[BUFFER_SIZE];
 
@@ -374,7 +374,7 @@ int downloade_file(char *filename, char * ip){
         bzero(buffer, BUFFER_SIZE);
     }
      char message[MAX_FILE_SIZE];
-    sprintf(message, "Receiving file '%s' from '%S'", filename, ip);
+    sprintf(message, "Receiving file '%s' from '%s'", filename, ip);
     log_action(message, "Info");
 
     close(sock);
@@ -391,53 +391,32 @@ void view_files_list(int sock) {
     char *request = "LIST_FILES";
     send(sock, request, strlen(request), 0);
 
-    // Array to store file information
-    struct FileInfo files[MAX_FILES];
-
     // buffer size to receive from the server
     int  file_count = 0;
-    long bf_size;
-
-    // receive bf_size bytes from the server
-    ssize_t bytes_received = recv(sock, &bf_size, sizeof(long), 0);
-    if (bytes_received != sizeof(long)) {
-        log_action("Error occurs when recv the size of the buffer ", "Error");
-        perror("Error occurs when recv the size of the buffer ");
+    
+    // Receive number of files
+    if (recv(sock, &file_count, sizeof(file_count), 0) < 0) {
+        perror("Receive failed");
         exit(EXIT_FAILURE);
     }
-
-
-
-    // allocate the buffer to store the received data
-    buffer = (char *) malloc(bf_size * sizeof(char));
-
-    if(buffer == NULL){
-        log_action("Error", "Failed to allocate buffer");
-        perror("Error: Failed to allocate buffer");
-        exit(EXIT_FAILURE);
-
-    }
-
-    // Receiving the list of files from the server
-    while ((bytes_received = recv(sock, buffer, bf_size, 0)) > 0 && strcmp(buffer, "finished") != 0) {
-        // Parsing and storing each line of the response
-    printf("suffer_size to receive: %ld\n", bf_size);
-        char *token = strtok(buffer, "\n");
-        while (token != NULL && file_count < MAX_FILES) {
-            sscanf(token, "%s | %d | %s | %s",
-                   files[file_count].ip,
-                   &files[file_count].size,
-                   files[file_count].filename,
-                   files[file_count].modification_date);
-            token = strtok(NULL, "\n");
-            file_count++;
+    // Array to store file information
+     FileInfo files[file_count+1];
+    // Receive file info
+    for (int i = 0; i < file_count; ++i) {
+        if (recv(sock, &files[i], sizeof( FileInfo), 0) < 0) {
+            perror("Receive failed");
+            exit(EXIT_FAILURE);
         }
     }
+
+
+
+
         // Displaying the list of files with index, name, and modification date
-        printf("Index\tFilename\tSize (Mo)\tModification Date\n");
+        printf("\n\nIndex\tFilename\tSize (Mo)\tModification Date\n");
         printf("-------------------------------------------------\n");
         for (int i = 0; i < file_count; i++) {
-            printf("%d\t%s\t\t%d\t\t%s\n", i ,
+            printf("[%d]\t%s\t\t%ld\t\t%s\n", i+1 ,
                    files[i].filename,
                    files[i].size,
                    files[i].modification_date);
@@ -449,22 +428,22 @@ void view_files_list(int sock) {
         scanf("%d", &file_index);
 
         // Code to download the file with the given index
-        printf("\n\n\n Downloading file %s with index %d...\n", files[file_index].filename,  file_index);
+        printf("\n\n\n Downloading file %s with index %d...\n", files[file_index-1].filename,  file_index-1);
 
         // Code to download the file with the given index file
-        if ( downloade_file(files[file_index].filename, files[file_index].ip) == -1 ){
+        if ( downloade_file(files[file_index-1].filename, files[file_index-1].ip) == -1 ){
             //log_action("Failling in the download_file function", "Error");
             char message[1024];
-            sprintf(message, "Error downloading file %s from %s", files[file_index].filename, files[file_index].ip);
+            sprintf(message, "Error downloading file %s from %s", files[file_index-1].filename, files[file_index-1].ip);
             printf(message);
             log_action(message, "Error");
             perror("Error downloading file");
             return;
         }
         char message[1024];
-        sprintf(message, "downloading file %s from %s finished", files[file_index].filename, files[file_index].ip);
+        sprintf(message, "downloading file %s from %s finished", files[file_index-1].filename, files[file_index-1].ip);
         log_action(message, "Success");
-        printf("Downloading file %s. finished. Your file is available in the Downloads/ folder. \n", files[file_index].filename);
+        printf("Downloading file %s. finished. Your file is available in the Downloads/ folder. \n", files[file_index-1].filename);
         return;
 }
 
@@ -518,10 +497,14 @@ char *search_file(const char *dir_path, const char *filename) {
 
 
 int send_file(char *fp, int sockfd){
-  int n;
-  char data[BUFFER_SIZE] = {0};
+    char data[BUFFER_SIZE] = {0};
+    FILE *send_file_desc = fopen(fp, 'r');
+    if(send_file_desc == NULL){
+        log_action("Failled to open the file in send_file function", "Error");
+        perror("open file");
+    }
 
-  while(fgets(data, BUFFER_SIZE, fp) != NULL) {
+  while(fgets(data, BUFFER_SIZE, send_file_desc) != NULL) {
     if (send(sockfd, data, sizeof(data), 0) == -1) {
         log_action("Failled to send the data file", "Error");
         perror("Error in sending file.");
@@ -534,9 +517,9 @@ int send_file(char *fp, int sockfd){
 
 
 
-void upload_file(){
+void *upload_file( ){
     int other_client_sockef_fd, new_socket;
-    struct sockaddr_in address;
+    struct sockaddr_in address, address_other;
     int opt = 1;
 
     if ((other_client_sockef_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
@@ -569,7 +552,7 @@ void upload_file(){
     log_action("Start listening the incomming upload request", "Info");
 
     while(true){
-        if (new_socket = accept(other_client_sockef_fd, (struct sockaddr*)&address, sizeof(address))<0){
+        if ((new_socket = accept(other_client_sockef_fd, (struct sockaddr*)&address_other, (socklen_t *)&address_other)) < 0){
                 log_action("Failled to accept incomming request", "Error");
                 perror("accepting the incomming upload request");
                 exit(EXIT_FAILURE);
