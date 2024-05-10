@@ -179,12 +179,12 @@ char *capture_data(){
     closedir(dir);
 
     char *text = file_infos_to_string(file_all, file_number);
-    fprintf(stdout, "%s\n\n", text);
+    //fprintf(stdout, "%s\n\n", text);
     return utf8_to_ascii(text);    
 }   
 
 
-    void share_data_contents(int socket_fd){
+ void share_data_contents(int socket_fd){
     char *files, buffer[BUFFER_SIZE] = {0};
     int dir_fd, watcher_dir;
 
@@ -196,7 +196,7 @@ char *capture_data(){
     //Send the initial state to the server  
     send(socket_fd, files, strlen(files), 0);
     log_action("Initial state send to the server", "Info");
-    printf("Initial state of 'data' folder sent sucessfully.\n");
+    //printf("Initial state of 'data' folder sent sucessfully.\n");
     free(files);
 
 
@@ -236,7 +236,7 @@ char *capture_data(){
 
                     // Send it to the server in the specified data format
                     send(socket_fd, files, strlen(files), 0);
-                    printf("File operation : Creation,  state of 'data/'  sent sucessfully.\n");
+                    //printf("File operation : Creation,  state of 'data/'  sent sucessfully.\n");
                     free(files);
                     log_action("File operation : Creation", "Info");
 
@@ -247,7 +247,7 @@ char *capture_data(){
 
                     // Send it to the server in the specified data format
                     send(socket_fd, files, strlen(files), 0);
-                    printf("File operation : Delection,  state of 'data/'  sent sucessfully.\n");
+                    //printf("File operation : Delection,  state of 'data/'  sent sucessfully.\n");
                     free(files);
                     log_action("File operation : Delection", "Info");
 
@@ -257,7 +257,7 @@ char *capture_data(){
                     files = capture_data();
                     // Send it to the server in the specified data format
                     send(socket_fd, files, strlen(files), 0);
-                    printf("File operation : Moving Out,  state of 'data/'  sent sucessfully.\n");
+                    //printf("File operation : Moving Out,  state of 'data/'  sent sucessfully.\n");
                     free(files);
                     log_action("File operation : Moving Out Action", "Info");
 
@@ -267,7 +267,7 @@ char *capture_data(){
 
                     // Send it to the server in the specified data format
                     send(socket_fd, files, strlen(files), 0);
-                    printf("File operation : Moving In,  state of 'data/'  sent sucessfully.\n");
+                    //printf("File operation : Moving In,  state of 'data/'  sent sucessfully.\n");
                     free(files);
                     log_action("File operation : MOving In Action", "Info");
                 }else if (event->mask & IN_MODIFY) {
@@ -276,7 +276,7 @@ char *capture_data(){
 
                     // Send it to the server in the specified data format
                     send(socket_fd, files, strlen(files), 0);
-                    printf("File operation : Modification,  state of 'data/'  sent sucessfully.\n");
+                    //printf("File operation : Modification,  state of 'data/'  sent sucessfully.\n");
                     free(files);
                     log_action("File operation : Modification", "Info");
 
@@ -287,12 +287,7 @@ char *capture_data(){
     }
     
 
-        // Réception de données du serveur
-        // recv(socket_fd, buffer, BUFFER_SIZE, 0);
-        // printf("Réponse %d du serveur: %s\n\n", i, buffer);
 	
-        // Fermeture du socket
-        close(socket_fd);
 
 
 
@@ -349,8 +344,8 @@ int downloade_file(char *filename, char * ip){
         perror("Connexion to the  client failled");
         return -1;
     }
-
-    if (send(sock, filename, sizeof(filename), 0) == -1) {
+    ssize_t bytes_sent;
+    if ( ( bytes_sent = send(sock, filename, strlen(filename), 0)) == -1) {
         char message[MAX_FILE_SIZE];
         sprintf(message, "Failled to send the filename %s the client %s", filename, ip);
         log_action(message, "Error");
@@ -358,6 +353,7 @@ int downloade_file(char *filename, char * ip){
     }
 
     int n;
+    size_t size = 0;
     FILE *fp;
     char path[MAX_FILE_SIZE] ;
     sprintf(path, "Downloads/%s", filename);
@@ -367,25 +363,28 @@ int downloade_file(char *filename, char * ip){
     while (1) {
         n = recv(sock, buffer, sizeof(buffer), 0);
         if (n <= 0){
-        break;
-        return;
+            break;
+            return -1;
+        }
+         else if(strstr(buffer, "___finished___") != NULL){
+            break;
+            close(sock);
         }
         fprintf(fp, "%s", buffer);
+        size += strlen(buffer);
         bzero(buffer, BUFFER_SIZE);
     }
+    fclose(fp);
      char message[MAX_FILE_SIZE];
-    sprintf(message, "Receiving file '%s' from '%s'", filename, ip);
+    sprintf(message, "Receiving %ld bytes of '%s' from '%s'", size, filename, ip );
     log_action(message, "Info");
 
-    close(sock);
     return 0;
-
 }
 
 
 // Function to display the list of files
 void view_files_list(int sock) {
-    char *buffer;
 
     // Sending request to the server
     char *request = "LIST_FILES";
@@ -435,7 +434,7 @@ void view_files_list(int sock) {
             //log_action("Failling in the download_file function", "Error");
             char message[1024];
             sprintf(message, "Error downloading file %s from %s", files[file_index-1].filename, files[file_index-1].ip);
-            printf(message);
+            printf("%s", message);
             log_action(message, "Error");
             perror("Error downloading file");
             return;
@@ -475,6 +474,7 @@ char *search_file(const char *dir_path, const char *filename) {
 
         if (stat(path, &statbuf) == -1) {
             perror("Erreur lors de la récupération des informations sur le fichier");
+            log_action("Failled to get a file informaton when try to browse the 'data' directory", "Warning");
             continue;
         }
 
@@ -496,30 +496,148 @@ char *search_file(const char *dir_path, const char *filename) {
 
 
 
-int send_file(char *fp, int sockfd){
+
+char *search_file_iterative(const char *dir_path, const char *filename) {
+    DIR *dir;
+    struct dirent *entry;
+    struct stat statbuf;
+    char *filepath = NULL;
+
+    dir = opendir(dir_path);
+    if (dir == NULL) {
+        perror("Erreur lors de l'ouverture du répertoire");
+        return NULL;
+    }
+
+    // Stack to keep track of directories to explore
+    struct StackItem {
+        DIR *dir;
+        char *path;
+    };
+    struct StackItem stack[1000]; // Adjust size as needed
+    int top = -1;
+
+    stack[++top].dir = dir;
+    stack[top].path = strdup(dir_path); // Add the initial directory
+
+    while (top >= 0) {
+        DIR *cur_dir = stack[top].dir;
+        char *cur_path = stack[top].path;
+        top--;
+
+        while ((entry = readdir(cur_dir)) != NULL) {
+            char path[1024];
+            snprintf(path, sizeof(path), "%s/%s", cur_path, entry->d_name);
+
+            if (strcmp(entry->d_name, filename) == 0) {
+                filepath = strdup(path);
+                break;
+            }
+
+            if (stat(path, &statbuf) == -1) {
+                perror("Erreur lors de la récupération des informations sur le fichier");
+                continue;
+            }
+
+            if (S_ISDIR(statbuf.st_mode) && strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
+                // Push the subdirectory onto the stack
+                stack[++top].dir = opendir(path);
+                stack[top].path = strdup(path);
+            }
+        }
+
+        if (filepath != NULL)
+            break; // Exit the outer loop if the file is found
+    }
+
+    // Clean up memory
+    for (int i = 0; i <= top; i++) {
+        closedir(stack[i].dir);
+        free(stack[i].path);
+    }
+
+    closedir(dir);
+    return filepath;
+}
+
+
+char* searchFile(const char *folder, const char *filename) {
+    DIR *dir;
+    struct dirent *entry;
+    struct stat filestat;
+    static char filepath[1024];
+
+    if ((dir = opendir(folder)) == NULL) {
+        perror("opendir");
+        exit(EXIT_FAILURE);
+    }
+
+    while ((entry = readdir(dir)) != NULL) {
+        sprintf(filepath, "%s/%s", folder, entry->d_name);
+        if (stat(filepath, &filestat) == -1) {
+            perror("stat");
+            exit(EXIT_FAILURE);
+        }
+
+        if (S_ISDIR(filestat.st_mode)) {
+            if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+                continue;
+            char *subfolder = (char*)malloc(strlen(filepath) + 1);
+            strcpy(subfolder, filepath);
+            char *found = searchFile(subfolder, filename);
+            free(subfolder);
+            if (found != NULL) {
+                closedir(dir);
+                return found;
+            }
+        } else if (S_ISREG(filestat.st_mode) && strcmp(entry->d_name, filename) == 0) {
+            closedir(dir);
+            return filepath;
+        }
+    }
+
+    closedir(dir);
+    return NULL;
+}
+
+
+size_t send_file(char *fp, int sockfd){
     char data[BUFFER_SIZE] = {0};
-    FILE *send_file_desc = fopen(fp, 'r');
+    FILE *send_file_desc = fopen(fp, "r");
     if(send_file_desc == NULL){
         log_action("Failled to open the file in send_file function", "Error");
         perror("open file");
     }
 
-  while(fgets(data, BUFFER_SIZE, send_file_desc) != NULL) {
-    if (send(sockfd, data, sizeof(data), 0) == -1) {
-        log_action("Failled to send the data file", "Error");
-        perror("Error in sending file.");
-        return 0;
+
+    size_t  len = 0;
+    while(fgets(data, BUFFER_SIZE, send_file_desc) != NULL) {
+        len += strlen(data);
+        if (send(sockfd, data, strlen(data), 0) == -1) {
+            log_action("Failled to send the data file", "Error");
+            perror("Error in sending file.");
+            return 0;
+        }
+        bzero(data, BUFFER_SIZE);
     }
-    bzero(data, BUFFER_SIZE);
-  }
-  return 1;
+
+    if (send(sockfd, "___finished___", strlen("___finished___"), 0) == -1) {
+            log_action("Failled to send the '___finished___' string", "Error");
+            perror("Error in sending file.");
+            return 0;
+        }
+
+    
+    return len;
 }
 
 
 
 void *upload_file( ){
     int other_client_sockef_fd, new_socket;
-    struct sockaddr_in address, address_other;
+    struct sockaddr_in address;
+    int addrlen = sizeof(address);
+
     int opt = 1;
 
     if ((other_client_sockef_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
@@ -552,39 +670,45 @@ void *upload_file( ){
     log_action("Start listening the incomming upload request", "Info");
 
     while(true){
-        if ((new_socket = accept(other_client_sockef_fd, (struct sockaddr*)&address_other, (socklen_t *)&address_other)) < 0){
+        if ((new_socket = accept(other_client_sockef_fd, (struct sockaddr*) &address, (socklen_t *) &addrlen)) < 0){
                 log_action("Failled to accept incomming request", "Error");
-                perror("accepting the incomming upload request");
+                perror("Failled to accept the incomming upload request");
                 exit(EXIT_FAILURE);
             }
+            
             char filename[150] = {0};
             ssize_t bytes_received = recv(new_socket, filename, BUFFER_SIZE, 0);
             if( bytes_received == -1 ){
                 log_action("Failled receive the incomming request filename", "Error");
                 perror("recv the incomming request filename");
+                close(new_socket);
                 exit(EXIT_FAILURE);
             }
 
-            char *filepath = search_file("data", filename);
+            filename[bytes_received] = '\0';
+            char *filepath = searchFile("data", filename);
             if (filepath == NULL) {
                 log_action("Failled to find the incomming request file", "Error");
-                send(new_socket, NULL, sizeof(NULL), 0);
+                send(new_socket, "NULL", sizeof("NULL"), 0);
+                close(new_socket);
                 exit(EXIT_FAILURE);
             }
-
-            if( send_file(filepath, new_socket) == 0 ) {
+           
+            size_t len;  
+            if( (len = send_file(filepath, new_socket)) == 0 ) {
                 log_action("It occurs when trying to send the requested file", "Error");
                 perror("Error sending");
+                close(new_socket);
                 break;
-
             }
-            sprintf(filepath, "Sucessfully send  %s to %s", filename, inet_ntoa(address.sin_addr));
+            sprintf(filepath, "Sucessfully send %ld of  %s to %s", len,  filename, inet_ntoa(address.sin_addr));
             log_action(filepath, "Sucess");
-
             close(new_socket);
 
     }
     
-
+    return NULL;
 }
+
+
 

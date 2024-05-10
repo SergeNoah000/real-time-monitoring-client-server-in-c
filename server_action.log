@@ -379,3 +379,79 @@
 [ WED 08-05-2024 01:02:27 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
 [ WED 08-05-2024 01:03:23 ] Warning: Connexion with client 127.0.0.1:54788 lost 
 [ WED 08-05-2024 01:03:38 ] Warning: Connexion with client 127.0.0.1:57424 lost 
+[ FRI 10-05-2024 13:11:16 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 13:11:35 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 13:17:32 ] Warning: Connexion with client 127.0.0.1:50874 lost 
+[ FRI 10-05-2024 13:17:35 ] Error: Binding of port to the sokcket failled  
+[ FRI 10-05-2024 13:24:12 ] Warning: Connexion with client 127.0.0.1:58058 lost 
+[ FRI 10-05-2024 13:25:26 ] Warning: Connexion with client 127.0.0.1:56738 lost 
+[ FRI 10-05-2024 13:25:56 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 13:26:01 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 13:38:36 ] Warning: Connexion with client 127.0.0.1:39076 lost 
+[ FRI 10-05-2024 13:48:16 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 13:57:38 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 14:07:20 ] Warning: Connexion with client 127.0.0.1:38440 lost 
+[ FRI 10-05-2024 14:15:56 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 14:17:03 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 14:18:48 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 14:18:48 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 14:18:54 ] Warning: Connexion with client 127.0.0.1:50926 lost 
+[ FRI 10-05-2024 16:56:58 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 16:57:19 ] Warning: Connexion with client 127.0.0.1:40268 lost 
+[ FRI 10-05-2024 17:00:52 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 17:01:28 ] Warning: Connexion with client 127.0.0.1:57442 lost 
+[ FRI 10-05-2024 17:01:50 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 17:02:50 ] Warning: Connexion with client 127.0.0.1:39380 lost 
+[ FRI 10-05-2024 17:13:53 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 17:17:54 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 17:21:39 ] Warning: Connexion with client 127.0.0.1:46594 lost 
+[ FRI 10-05-2024 17:21:53 ] Error: Binding of port to the sokcket failled  
+[ FRI 10-05-2024 17:22:09 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 17:26:23 ] Warning: Connexion with client 127.0.0.1:51392 lost 
+[ FRI 10-05-2024 17:31:40 ] Warning: Connexion with client 172.16.175.135:52288 lost 
+[ FRI 10-05-2024 17:32:40 ] Info: Update 'server_data.log' caused by client  ``172.16.175.135``  
+[ FRI 10-05-2024 17:34:34 ] Warning: Connexion with client 172.16.175.135:46354 lost 
+[ FRI 10-05-2024 17:34:50 ] Info: Update 'server_data.log' caused by client  ``172.16.175.135``  
+[ FRI 10-05-2024 17:41:59 ] Warning: Connexion with client 127.0.0.1:45238 lost 
+[ FRI 10-05-2024 22:55:10 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 22:58:35 ] Warning: Connexion with client 127.0.0.1:51012 lost 
+[ FRI 10-05-2024 22:58:55 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 23:03:01 ] Warning: Connexion with client 127.0.0.1:35482 lost 
+[ FRI 10-05-2024 23:03:20 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 23:12:48 ] Warning: Connexion with client 127.0.0.1:46482 lost 
+[ FRI 10-05-2024 23:12:55 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 23:16:05 ] Warning: Connexion with client 127.0.0.1:42672 lost 
+[ FRI 10-05-2024 23:16:11 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 23:20:18 ] Warning: Connexion with client 127.0.0.1:59184 lost 
+[ FRI 10-05-2024 23:21:13 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 23:22:56 ] Warning: Connexion with client 127.0.0.1:56188 lost 
+[ FRI 10-05-2024 23:23:03 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 23:24:41 ] Warning: Connexion with client 127.0.0.1:41922 lost 
+[ FRI 10-05-2024 23:24:49 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 23:27:54 ] Warning: Connexion with client 127.0.0.1:41576 lost 
+[ FRI 10-05-2024 23:28:03 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 23:31:55 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 23:37:28 ] Warning: Connexion with client 127.0.0.1:35920 lost 
+[ FRI 10-05-2024 23:38:01 ] Warning: Connexion with client 127.0.0.1:35556 lost 
+[ FRI 10-05-2024 23:38:35 ] Warning: Connexion with client 127.0.0.1:35488 lost 
+[ FRI 10-05-2024 23:38:42 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 23:45:40 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 23:45:59 ] Warning: Connexion with client 127.0.0.1:49556 lost 
+[ FRI 10-05-2024 23:47:06 ] Warning: Connexion with client 127.0.0.1:51586 lost 
+[ FRI 10-05-2024 23:47:26 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 23:52:48 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ FRI 10-05-2024 23:53:39 ] Warning: Connexion with client 127.0.0.1:44934 lost 
+[ SAT 11-05-2024 00:05:05 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SAT 11-05-2024 00:05:19 ] Warning: Connexion with client 127.0.0.1:33942 lost 
+[ SAT 11-05-2024 00:08:05 ] Warning: Connexion with client 127.0.0.1:46908 lost 
+[ SAT 11-05-2024 00:08:29 ] Warning: Connexion with client 127.0.0.1:36148 lost 
+[ SAT 11-05-2024 00:08:37 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SAT 11-05-2024 00:10:29 ] Warning: Connexion with client 127.0.0.1:60570 lost 
+[ SAT 11-05-2024 00:14:18 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SAT 11-05-2024 00:18:44 ] Warning: Connexion with client 127.0.0.1:49928 lost 
+[ SAT 11-05-2024 00:19:24 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SAT 11-05-2024 00:20:05 ] Warning: Connexion with client 127.0.0.1:55088 lost 
+[ SAT 11-05-2024 00:25:41 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SAT 11-05-2024 00:26:38 ] Warning: Connexion with client 127.0.0.1:46058 lost 
+[ SAT 11-05-2024 00:32:53 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SAT 11-05-2024 00:34:39 ] Warning: Connexion with client 127.0.0.1:56046 lost 

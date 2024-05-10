@@ -115,7 +115,7 @@ char *search_file(const char *dir_path, const char *filename) ;
 /// @param fp : relative path to the file
 /// @param sockfd : socket to send the file
 /// @return int : 1 if successful, 0 otherwise
-int send_file(char *fp, int sockfd);
+size_t send_file(char *fp, int sockfd);
 
 
 // start listening for the the download demand and serve it

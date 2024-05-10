@@ -167,16 +167,21 @@ void *handle_connection(void ) {
                 break;
             }
 
-            if (strcmp(buffer, "LIST_FILES") == 0)
+            if (strstr(buffer, "LIST_FILES") != NULL)
             {
-                printf("Requested list files");
+                 clear_last_lines(1);
+                time_t date_t = time(NULL);
+                char *str_date = malloc(sizeof(char) * 50);
+                convert_time(str_date, sizeof(date_t ) * 4, date_t);
+                printf("[ %s ] Requested list files by %s\n", str_date, inet_ntoa(client_address.sin_addr));
+                free(str_date);
                 read_and_send_files_infos(FILE_DATA, client_socket);
             }else
             {
             
                 clear_last_lines(1);
                 time_t date_t = time(NULL);
-                char *str_date = malloc(sizeof(char) * 30);
+                char *str_date = malloc(sizeof(char) * 50);
                 convert_time(str_date, sizeof(date_t ) * 4, date_t);
                 printf("[ %s ] Received data from client %s:%d:\n",str_date, inet_ntoa(client_address.sin_addr),
                     ntohs(client_address.sin_port));

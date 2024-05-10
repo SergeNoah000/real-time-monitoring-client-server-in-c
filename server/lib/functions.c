@@ -188,9 +188,9 @@ void read_and_send_files_infos(const char *filename, int socket_fd) {
     char current_ip[25] = {0};
     while (fgets(line, sizeof(line), file)) {
         // Ignore empty lines
-        if (strlen(line) <= 1)
+        if (strlen(line) <= 1){
             continue;
-
+        }
         // Remove the newline character at the end
         line[strcspn(line, "\n")] = '\0';
 
@@ -217,15 +217,16 @@ void read_and_send_files_infos(const char *filename, int socket_fd) {
         perror("Send failed");
         exit(EXIT_FAILURE);
     }
-    printf("Nombre de fichier de la liste: %d", current_file_index);
+    
     // Send each file info
     for (int i = 0; i < current_file_index; ++i) {
         if (send(socket_fd, &files[i], sizeof(FileInfo ), 0) != sizeof( FileInfo)) {
+            log_action("Successfully send list of files", "Success");
             perror("Send failed");
             exit(EXIT_FAILURE);
         }
     }
-
+    free(files);
 
     return;
 }

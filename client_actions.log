@@ -590,3 +590,186 @@ mike 0.00 MON 22-04-2024 15:06:37
 [ WED 08-05-2024 01:02:37 ] Error: Failled to find the incomming request file 
 [ WED 08-05-2024 01:02:37 ] Info: Receiving file 'moi-moche' from '127.0.1.1' 
 [ WED 08-05-2024 01:02:37 ] Success: downloading file moi-moche from 127.0.1.1 finished 
+[ FRI 10-05-2024 13:11:16 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 13:11:16 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 13:25:56 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 13:25:56 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 13:38:55 ] Error: Connexion to the other client failled 
+[ FRI 10-05-2024 13:38:55 ] Error: Error downloading file bjr.tex from 127.0.1.1 
+[ FRI 10-05-2024 13:42:30 ] Error: Connexion to the other client failled 
+[ FRI 10-05-2024 13:42:30 ] Error: Error downloading file testi.log from 127.0.1.1 
+[ FRI 10-05-2024 13:48:16 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 13:48:16 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 14:15:56 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 14:15:56 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 14:17:03 ] Error: Binding of port to the sokcket failled  
+bjr.tex 0.00 MON 22-04-2024 10:19:18
+new_file.txt 0.00 MON 22-04-2024 12:00:11
+niki-junoir 0.00 MON 22-04-2024 16:17:46
+mechant 0.00 MON 22-04-2024 16:30:17
+testi.log 0.00 MON 22-04-2024 10:56:31
+new_file8.txt 0.00 MON 22-04-2024 11:13:15
+mechant5 0.00 MON 22-04-2024 16:37:29
+Dockerfile 0.00 MON 22-04-2024 15:17:23
+mechant3 0.00 MON 22-04-2024 16:34:08
+philadepli 0.00 MON 22-04-2024 15:11:32
+test.txt 0.00 MON 22-04-2024 10:19:42
+ned.tx 0.00 MON 06-05-2024 10:35:11
+babla 0.00 MON 22-04-2024 15:17:08
+mamelon 0.00 MON 22-04-2024 16:04:28
+mechant1 0.00 MON 22-04-2024 16:32:57
+moi-moche 0.00 WED 08-05-2024 00:37:08
+mike 0.00 MON 22-04-2024 15:06:37
+[ FRI 10-05-2024 14:17:03 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 14:17:41 ] Sucess: Sucessfully send  mamelon to 0.0.0.0 
+[ FRI 10-05-2024 14:18:48 ] Info: File operation : Moving Out Action 
+[ FRI 10-05-2024 14:18:48 ] Info: File operation : MOving In Action 
+[ FRI 10-05-2024 16:56:58 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 16:56:58 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 17:00:43 ] Error: Connexion to the server failled 
+[ FRI 10-05-2024 17:00:52 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 17:00:52 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 17:01:35 ] Error: Connexion to the server failled 
+[ FRI 10-05-2024 17:01:38 ] Error: Connexion to the server failled 
+[ FRI 10-05-2024 17:01:42 ] Error: Connexion to the server failled 
+[ FRI 10-05-2024 17:01:50 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 17:01:50 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 17:02:12 ] Error: Failled to find the incomming request file 
+[ FRI 10-05-2024 17:02:12 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' 
+[ FRI 10-05-2024 17:02:12 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ FRI 10-05-2024 17:13:53 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 17:13:53 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 17:14:03 ] Error: Failled to find the incomming request file 
+[ FRI 10-05-2024 17:14:03 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' 
+[ FRI 10-05-2024 17:14:03 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ FRI 10-05-2024 17:17:54 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 17:17:54 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 17:18:06 ] Test: Chemin relatif: data/bjr.tex
+ 
+[ FRI 10-05-2024 17:18:06 ] Sucess: Sucessfully send  bjr.tex to 0.0.0.0 
+[ FRI 10-05-2024 17:18:06 ] Info: Receiving file 'bjr.tex' from '127.8.0.1' 
+[ FRI 10-05-2024 17:18:06 ] Success: downloading file bjr.tex from 127.8.0.1 finished 
+[ FRI 10-05-2024 17:18:43 ] Error: Connexion to the other client failled 
+[ FRI 10-05-2024 17:18:43 ] Error: Error downloading file ned4747.tx from 127.0.0.1 
+[ FRI 10-05-2024 17:22:09 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 17:22:09 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 17:22:23 ] Error: Failled to find the incomming request file 
+[ FRI 10-05-2024 17:22:23 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' 
+[ FRI 10-05-2024 17:22:23 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ FRI 10-05-2024 17:33:33 ] Info: Receiving file 'ned4747.tx' from '172.16.175.135' 
+[ FRI 10-05-2024 17:33:33 ] Success: downloading file ned4747.tx from 172.16.175.135 finished 
+[ FRI 10-05-2024 17:35:24 ] Errro: Invalid IP ADDRESS of other client 
+ 
+[ FRI 10-05-2024 17:35:24 ] Error: Error downloading file ? from n 
+[ FRI 10-05-2024 22:55:10 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 22:55:10 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 22:56:29 ] Error: Failled to find the incomming request file 
+[ FRI 10-05-2024 22:56:29 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' 
+[ FRI 10-05-2024 22:56:29 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ FRI 10-05-2024 22:58:55 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 22:58:55 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 23:01:54 ] Error: Failled to find the incomming request file 
+[ FRI 10-05-2024 23:01:54 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' 
+[ FRI 10-05-2024 23:01:54 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ FRI 10-05-2024 23:03:20 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 23:03:20 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 23:03:36 ] Test: ned4747. 
+[ FRI 10-05-2024 23:03:36 ] Error: Failled to find the incomming request file 
+[ FRI 10-05-2024 23:03:36 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' 
+[ FRI 10-05-2024 23:03:36 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ FRI 10-05-2024 23:12:55 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 23:12:55 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 23:13:00 ] Test: ned4747. 
+[ FRI 10-05-2024 23:13:00 ] Error: Failled to find the incomming request file 
+[ FRI 10-05-2024 23:13:00 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' 
+[ FRI 10-05-2024 23:13:00 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ FRI 10-05-2024 23:16:11 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 23:16:11 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 23:16:19 ] Test: Nom de fichier: ned4747. nombre de byte: 8
+ 
+[ FRI 10-05-2024 23:16:19 ] Error: Failled to find the incomming request file 
+[ FRI 10-05-2024 23:16:19 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' 
+[ FRI 10-05-2024 23:16:19 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ FRI 10-05-2024 23:21:13 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 23:21:13 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 23:21:32 ] Test: Nom de fichier: ned4747. nombre de byte recus: 8
+ 
+[ FRI 10-05-2024 23:21:32 ] Error: Failled to find the incomming request file 
+[ FRI 10-05-2024 23:21:32 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' 
+[ FRI 10-05-2024 23:21:32 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ FRI 10-05-2024 23:23:03 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 23:23:03 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 23:23:17 ] Test: Nom de fichier: ned4747. nombre de byte recus: 8
+ 
+[ FRI 10-05-2024 23:23:17 ] Test: Nom de fichier: ned4747.tx nombre de byte envoyés: 8
+ 
+[ FRI 10-05-2024 23:23:17 ] Error: Failled to find the incomming request file 
+[ FRI 10-05-2024 23:23:17 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' 
+[ FRI 10-05-2024 23:23:17 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ FRI 10-05-2024 23:24:49 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 23:24:49 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 23:25:10 ] Test: Nom de fichier: ned4747.tx nombre de byte envoyés: 10
+ 
+[ FRI 10-05-2024 23:25:10 ] Test: Nom de fichier: ned4747.tx nombre de byte recus: 10
+ 
+[ FRI 10-05-2024 23:28:03 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 23:28:03 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 23:28:14 ] Sucess: Sucessfully send  ned4747.tx to 0.0.0.0 
+[ FRI 10-05-2024 23:28:14 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' 
+[ FRI 10-05-2024 23:28:14 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ FRI 10-05-2024 23:31:55 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 23:31:55 ] Error: Binding of port to the sokcket failled  
+[ FRI 10-05-2024 23:32:01 ] Sucess: Sucessfully send  ned4747.tx to 0.0.0.0 
+[ FRI 10-05-2024 23:32:01 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' size: 140611090499566 
+[ FRI 10-05-2024 23:32:01 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ FRI 10-05-2024 23:37:34 ] Error: Binding of port to the sokcket failled  
+[ FRI 10-05-2024 23:38:42 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 23:38:42 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 23:39:01 ] Test: Relative path: data/ned4747.tx 
+[ FRI 10-05-2024 23:39:01 ] Sucess: Sucessfully send  ned4747.tx to 0.0.0.0 
+[ FRI 10-05-2024 23:39:01 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' size: 139761121617902 
+[ FRI 10-05-2024 23:39:01 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ FRI 10-05-2024 23:45:40 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 23:45:40 ] Error: Binding of port to the sokcket failled  
+[ FRI 10-05-2024 23:45:59 ] Errro: Invalid IP ADDRESS of other client 
+ 
+[ FRI 10-05-2024 23:47:26 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 23:47:26 ] Info: Start listening the incomming upload request 
+[ FRI 10-05-2024 23:47:36 ] Test: Nomber of bytes sent: 313 
+[ FRI 10-05-2024 23:47:36 ] Sucess: Sucessfully send  ned4747.tx to 0.0.0.0 
+[ FRI 10-05-2024 23:47:36 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' size: 313 
+[ FRI 10-05-2024 23:47:36 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ FRI 10-05-2024 23:52:48 ] Info: Initial state send to the server 
+[ FRI 10-05-2024 23:52:48 ] Error: Binding of port to the sokcket failled  
+[ FRI 10-05-2024 23:53:11 ] Test: Nomber of bytes sent: 313 
+[ FRI 10-05-2024 23:53:11 ] Sucess: Sucessfully send  ned4747.tx to 127.0.0.1 
+[ FRI 10-05-2024 23:53:11 ] Info: Receiving file 'ned4747.tx' from '127.0.0.1' size: 313 
+[ FRI 10-05-2024 23:53:11 ] Success: downloading file ned4747.tx from 127.0.0.1 finished 
+[ SAT 11-05-2024 00:05:05 ] Info: Initial state send to the server 
+[ SAT 11-05-2024 00:05:05 ] Error: Binding of port to the sokcket failled  
+[ SAT 11-05-2024 00:08:00 ] Error: Binding of port to the sokcket failled  
+[ SAT 11-05-2024 00:08:37 ] Info: Start listening the incomming upload request 
+[ SAT 11-05-2024 00:08:37 ] Info: Initial state send to the server 
+[ SAT 11-05-2024 00:09:56 ] Error: Failled to accept incomming request 
+[ SAT 11-05-2024 00:09:56 ] Info: Receiving 0 bytes of 'moi-moche' from '127.0.1.1' 
+[ SAT 11-05-2024 00:09:56 ] Success: downloading file moi-moche from 127.0.1.1 finished 
+[ SAT 11-05-2024 00:14:18 ] Info: Initial state send to the server 
+[ SAT 11-05-2024 00:14:18 ] Info: Start listening the incomming upload request 
+[ SAT 11-05-2024 00:14:52 ] Error: Failled to accept incomming request 
+[ SAT 11-05-2024 00:14:52 ] Info: Receiving 0 bytes of 'moi-moche' from '127.0.1.1' 
+[ SAT 11-05-2024 00:14:52 ] Success: downloading file moi-moche from 127.0.1.1 finished 
+[ SAT 11-05-2024 00:19:24 ] Info: Start listening the incomming upload request 
+[ SAT 11-05-2024 00:19:24 ] Info: Initial state send to the server 
+[ SAT 11-05-2024 00:19:49 ] Sucess: Sucessfully send 1024 of  moi-moche to 127.0.0.1 
+[ SAT 11-05-2024 00:19:49 ] Info: Receiving 697 bytes of 'moi-moche' from '127.0.1.1' 
+[ SAT 11-05-2024 00:19:49 ] Success: downloading file moi-moche from 127.0.1.1 finished 
+[ SAT 11-05-2024 00:25:41 ] Info: Initial state send to the server 
+[ SAT 11-05-2024 00:25:41 ] Info: Start listening the incomming upload request 
+[ SAT 11-05-2024 00:26:12 ] Sucess: Sucessfully send 1024 of  moi-moche to 127.0.0.1 
+[ SAT 11-05-2024 00:26:12 ] Info: Receiving 1025 bytes of 'moi-moche' from '127.0.1.1' 
+[ SAT 11-05-2024 00:26:12 ] Success: downloading file moi-moche from 127.0.1.1 finished 
+[ SAT 11-05-2024 00:32:53 ] Info: Start listening the incomming upload request 
+[ SAT 11-05-2024 00:32:53 ] Info: Initial state send to the server 
+[ SAT 11-05-2024 00:33:10 ] Sucess: Sucessfully send 1024 of  moi-moche to 127.0.0.1 
+[ SAT 11-05-2024 00:33:10 ] Info: Receiving 1024 bytes of 'moi-moche' from '127.0.1.1' 
+[ SAT 11-05-2024 00:33:10 ] Success: downloading file moi-moche from 127.0.1.1 finished 

@@ -94,7 +94,7 @@ int main(int argc, char *args[]) {
                 pid = fork();
                 if (pid == 0) {
                     // Child process
-                    close(STDOUT_FILENO);  // Close standard output
+                    // close(STDOUT_FILENO);  // Close standard output
 
                     // start listening incomming requests in background
                     pthread_t thread;
@@ -104,9 +104,6 @@ int main(int argc, char *args[]) {
                 } else if (pid > 0) {
                     // Parent process
                     printf("Sharing file list with the server in a new process (PID: %d)\n", pid);
-                    // You can store the child process ID for monitoring and stopping
-                    // Wait for the child process to finish (optional)
-                    // waitpid(pid, NULL, 0);
                     break;
                 } else {
                     // Fork failed
@@ -120,6 +117,10 @@ int main(int argc, char *args[]) {
                 break;
             case 'q':
                 // Quit the program
+                if (pid > 0)
+                {
+                    kill(pid, SIGKILL);
+                }
                 close(sock);
                 exit(EXIT_SUCCESS);
             // case 'p':
@@ -139,6 +140,7 @@ int main(int argc, char *args[]) {
                 break;
             default:
                 printf("Invalid option. Please try again.\n");
+                break;  
         }
     }
 
