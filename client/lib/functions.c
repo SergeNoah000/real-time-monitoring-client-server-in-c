@@ -50,7 +50,7 @@ char *utf8_to_ascii(const char *utf8_str) {
     size_t ascii_index = 0;
     for (size_t i = 0; i < utf8_len; i++) {
         // Encode non-ASCII characters as escape sequences in ASCII string
-        if (utf8_str[i] >= 0 && utf8_str[i] <= 127) {
+        if (utf8_str[i] >= 0 ) {
             ascii_str[ascii_index++] = utf8_str[i];
         } else {
             sprintf(&ascii_str[ascii_index], "\\x%02X", (unsigned char)utf8_str[i]); // Encode non-ASCII character
@@ -306,6 +306,36 @@ void displayDiagram() {
     printf("\nCredits: Serge Noah (Master I SE & RESEAU)\n");
 }
 
+/// @brief Receive a file from the sockfd socket and save it in fp
+/// @param fp 
+/// @param sockfd 
+/// @return size_t size of the reveived file
+size_t receive_file(const char *fp, int sockfd) {
+    FILE *received_file_desc = fopen(fp, "wb");
+    if (received_file_desc == NULL) {
+        log_action("Failed to open the file in receive_file function", "Error");
+        perror("open file");
+        return 0;
+    }
+
+    char data[BUFFER_SIZE];
+    size_t total_bytes_received = 0;
+    ssize_t bytes_received;
+
+    while ((bytes_received = recv(sockfd, data, BUFFER_SIZE, 0)) > 0) {
+        size_t bytes_written = fwrite(data, 1, bytes_received, received_file_desc);
+        if (bytes_written <  bytes_received) {
+            log_action("Failed to write file data", "Error");
+            perror("Error in writing file.");
+            fclose(received_file_desc);
+            return total_bytes_received;
+        }
+        total_bytes_received += bytes_received;
+    }
+
+    fclose(received_file_desc);
+    return total_bytes_received;
+}
 
 
 /// @brief Download filename to another client ip given
@@ -352,31 +382,13 @@ int downloade_file(char *filename, char * ip){
         return -1;
     }
 
-    int n;
     size_t size = 0;
-    FILE *fp;
     char path[MAX_FILE_SIZE] ;
     sprintf(path, "Downloads/%s", filename);
-    char buffer[BUFFER_SIZE];
-
-    fp = fopen(path, "w");
-    while (1) {
-        n = recv(sock, buffer, sizeof(buffer), 0);
-        if (n <= 0){
-            break;
-            return -1;
-        }
-         else if(strstr(buffer, "___finished___") != NULL){
-            break;
-            close(sock);
-        }
-        fprintf(fp, "%s", buffer);
-        size += strlen(buffer);
-        bzero(buffer, BUFFER_SIZE);
-    }
-    fclose(fp);
-     char message[MAX_FILE_SIZE];
-    sprintf(message, "Receiving %ld bytes of '%s' from '%s'", size, filename, ip );
+ 
+    size = receive_file(path, sock);
+    char message[MAX_FILE_SIZE];
+    sprintf(message, "Receiving %ld bytes of '%s' from '%s'", size , filename, ip );
     log_action(message, "Info");
 
     return 0;
@@ -399,7 +411,7 @@ void view_files_list(int sock) {
         exit(EXIT_FAILURE);
     }
     // Array to store file information
-     FileInfo files[file_count+1];
+    FileInfo files[file_count+1];
     // Receive file info
     for (int i = 0; i < file_count; ++i) {
         if (recv(sock, &files[i], sizeof( FileInfo), 0) < 0) {
@@ -414,35 +426,45 @@ void view_files_list(int sock) {
         // Displaying the list of files with index, name, and modification date
         printf("\n\nIndex\tFilename\tSize (Mo)\tModification Date\n");
         printf("-------------------------------------------------\n");
-        for (int i = 0; i < file_count; i++) {
-            printf("[%d]\t%s\t\t%ld\t\t%s\n", i+1 ,
+        if (file_count ==0 )
+        {
+            printf("No files found\n");
+            log_action("No files found", "Info");
+            return;
+        }
+        else{
+            for (int i = 0; i < file_count; i++) {
+                printf("[%d]\t%s\t\t%ld\t\t%s\n", i+1 ,
                    files[i].filename,
                    files[i].size,
                    files[i].modification_date);
-        }
+            }
 
-        // Interaction with the user for downloading or returning to the menu
-        printf("\nEnter the index of the file to download (Ctrl+C to return to the menu): ");
-        int file_index;
-        scanf("%d", &file_index);
+            // Interaction with the user for downloading or returning to the menu
+            printf("\nEnter the index of the file to download (Ctrl+C to return to the menu): ");
+            int file_index;
+            scanf("%d", &file_index);
 
-        // Code to download the file with the given index
-        printf("\n\n\n Downloading file %s with index %d...\n", files[file_index-1].filename,  file_index-1);
+            // Code to download the file with the given index
+            printf("\n\n\n Downloading file %s with index %d...\n", files[file_index-1].filename,  file_index);
 
-        // Code to download the file with the given index file
-        if ( downloade_file(files[file_index-1].filename, files[file_index-1].ip) == -1 ){
-            //log_action("Failling in the download_file function", "Error");
+            // Code to download the file with the given index file
+            if ( downloade_file(files[file_index-1].filename, files[file_index-1].ip) == -1 ){
+                //log_action("Failling in the download_file function", "Error");
+                char message[1024];
+                sprintf(message, "Error downloading file %s from %s", files[file_index-1].filename, files[file_index-1].ip);
+                printf("%s", message);
+                log_action(message, "Error");
+                perror("Error downloading file");
+                return;
+            }
             char message[1024];
-            sprintf(message, "Error downloading file %s from %s", files[file_index-1].filename, files[file_index-1].ip);
-            printf("%s", message);
-            log_action(message, "Error");
-            perror("Error downloading file");
-            return;
+            sprintf(message, "downloading file %s from %s finished", files[file_index-1].filename, files[file_index-1].ip);
+            log_action(message, "Success");
+            printf("Downloading file %s. finished. Your file is available in the Downloads/ folder. \n", files[file_index-1].filename);
+        
         }
-        char message[1024];
-        sprintf(message, "downloading file %s from %s finished", files[file_index-1].filename, files[file_index-1].ip);
-        log_action(message, "Success");
-        printf("Downloading file %s. finished. Your file is available in the Downloads/ folder. \n", files[file_index-1].filename);
+        
         return;
 }
 
@@ -601,34 +623,35 @@ char* searchFile(const char *folder, const char *filename) {
 }
 
 
-size_t send_file(char *fp, int sockfd){
-    char data[BUFFER_SIZE] = {0};
-    FILE *send_file_desc = fopen(fp, "r");
-    if(send_file_desc == NULL){
-        log_action("Failled to open the file in send_file function", "Error");
+size_t send_file(const char *fp, int sockfd) {
+    FILE *send_file_desc = fopen(fp, "rb");
+    if (send_file_desc == NULL) {
+        log_action("Failed to open the file in send_file function", "Error");
         perror("open file");
+        return 0;
     }
 
+    fseek(send_file_desc, 0, SEEK_END);
+    long file_size = ftell(send_file_desc);
+    fseek(send_file_desc, 0, SEEK_SET);
 
-    size_t  len = 0;
-    while(fgets(data, BUFFER_SIZE, send_file_desc) != NULL) {
-        len += strlen(data);
-        if (send(sockfd, data, strlen(data), 0) == -1) {
-            log_action("Failled to send the data file", "Error");
+    char data[BUFFER_SIZE];
+    size_t total_bytes_sent = 0;
+    size_t bytes_read;
+
+    while ((bytes_read = fread(data, 1, BUFFER_SIZE, send_file_desc)) > 0) {
+        ssize_t bytes_sent = send(sockfd, data, bytes_read, 0);
+        if (bytes_sent == -1) {
+            log_action("Failed to send the file data", "Error");
             perror("Error in sending file.");
-            return 0;
+            fclose(send_file_desc);
+            return total_bytes_sent;
         }
-        bzero(data, BUFFER_SIZE);
+        total_bytes_sent += bytes_sent;
     }
 
-    if (send(sockfd, "___finished___", strlen("___finished___"), 0) == -1) {
-            log_action("Failled to send the '___finished___' string", "Error");
-            perror("Error in sending file.");
-            return 0;
-        }
-
-    
-    return len;
+    fclose(send_file_desc);
+    return total_bytes_sent;
 }
 
 

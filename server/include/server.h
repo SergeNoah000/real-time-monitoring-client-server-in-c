@@ -23,7 +23,7 @@
 
 
 #define MAX_THREADS 10
-#define BUFFER_SIZE 10240
+#define BUFFER_SIZE 65535
 #define LOG_FILE "server_action.log"
 #define FILE_DATA "server_data.log"
 
