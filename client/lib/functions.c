@@ -12,6 +12,14 @@
 #include <stdbool.h>
 
 
+jmp_buf env ;
+
+
+void handle_sigint(int sig) {
+    longjmp(env, 1);
+}
+
+
 
 //convert time to a valid  string
 void convert_time(char *str,  size_t size, time_t time){
@@ -398,74 +406,79 @@ int downloade_file(char *filename, char * ip){
 // Function to display the list of files
 void view_files_list(int sock) {
 
-    // Sending request to the server
-    char *request = "LIST_FILES";
-    send(sock, request, strlen(request), 0);
+    signal(SIGINT, handle_sigint);
+    if (setjmp(env) == 0) {
+        // Sending request to the server
+        char *request = "LIST_FILES";
+        send(sock, request, strlen(request), 0);
 
-    // buffer size to receive from the server
-    int  file_count = 0;
-    
-    // Receive number of files
-    if (recv(sock, &file_count, sizeof(file_count), 0) < 0) {
-        perror("Receive failed");
-        exit(EXIT_FAILURE);
-    }
-    // Array to store file information
-    FileInfo files[file_count+1];
-    // Receive file info
-    for (int i = 0; i < file_count; ++i) {
-        if (recv(sock, &files[i], sizeof( FileInfo), 0) < 0) {
+        // buffer size to receive from the server
+        int  file_count = 0;
+        
+        // Receive number of files
+        if (recv(sock, &file_count, sizeof(file_count), 0) < 0) {
             perror("Receive failed");
             exit(EXIT_FAILURE);
         }
-    }
-
-
-
-
-        // Displaying the list of files with index, name, and modification date
-        printf("\n\nIndex\tFilename\tSize (Mo)\tModification Date\n");
-        printf("-------------------------------------------------\n");
-        if (file_count ==0 )
-        {
-            printf("No files found\n");
-            log_action("No files found", "Info");
-            return;
-        }
-        else{
-            for (int i = 0; i < file_count; i++) {
-                printf("[%d]\t%s\t\t%ld\t\t%s\n", i+1 ,
-                   files[i].filename,
-                   files[i].size,
-                   files[i].modification_date);
+        // Array to store file information
+        FileInfo files[file_count+1];
+        // Receive file info
+        for (int i = 0; i < file_count; ++i) {
+            if (recv(sock, &files[i], sizeof( FileInfo), 0) < 0) {
+                perror("Receive failed");
+                exit(EXIT_FAILURE);
             }
+        }
 
-            // Interaction with the user for downloading or returning to the menu
-            printf("\nEnter the index of the file to download (Ctrl+C to return to the menu): ");
-            int file_index;
-            scanf("%d", &file_index);
 
-            // Code to download the file with the given index
-            printf("\n\n\n Downloading file %s with index %d...\n", files[file_index-1].filename,  file_index);
 
-            // Code to download the file with the given index file
-            if ( downloade_file(files[file_index-1].filename, files[file_index-1].ip) == -1 ){
-                //log_action("Failling in the download_file function", "Error");
-                char message[1024];
-                sprintf(message, "Error downloading file %s from %s", files[file_index-1].filename, files[file_index-1].ip);
-                printf("%s", message);
-                log_action(message, "Error");
-                perror("Error downloading file");
+
+            // Displaying the list of files with index, name, and modification date
+            printf("\n\nIndex\tFilename\tSize (Mo)\tModification Date\n");
+            printf("-------------------------------------------------\n");
+            if (file_count ==0 )
+            {
+                printf("No files found\n");
+                log_action("No files found", "Info");
                 return;
             }
-            char message[1024];
-            sprintf(message, "downloading file %s from %s finished", files[file_index-1].filename, files[file_index-1].ip);
-            log_action(message, "Success");
-            printf("Downloading file %s. finished. Your file is available in the Downloads/ folder. \n", files[file_index-1].filename);
-        
+            else{
+                for (int i = 0; i < file_count; i++) {
+                    printf("[%d]\t%s\t\t%ld\t\t%s\n", i+1 ,
+                    files[i].filename,
+                    files[i].size,
+                    files[i].modification_date);
+                }
+
+                // Interaction with the user for downloading or returning to the menu
+                printf("\nEnter the index of the file to download (Ctrl+C to return to the menu): ");
+                int file_index;
+                scanf("%d", &file_index);
+
+                // Code to download the file with the given index
+                printf("\n\n\n Downloading file %s with index %d...\n", files[file_index-1].filename,  file_index);
+
+                // Code to download the file with the given index file
+                if ( downloade_file(files[file_index-1].filename, files[file_index-1].ip) == -1 ){
+                    //log_action("Failling in the download_file function", "Error");
+                    char message[1024];
+                    sprintf(message, "Error downloading file %s from %s", files[file_index-1].filename, files[file_index-1].ip);
+                    printf("%s", message);
+                    log_action(message, "Error");
+                    perror("Error downloading file");
+                    return;
+                }
+                char message[1024];
+                sprintf(message, "downloading file %s from %s finished", files[file_index-1].filename, files[file_index-1].ip);
+                log_action(message, "Success");
+                printf("Downloading file %s. finished. Your file is available in the Downloads/ folder. \n", files[file_index-1].filename);
+            
+            }
+            
+            return;
+        }else{
+           return;
         }
-        
-        return;
 }
 
 // Return relative path from  the caller dir and filename

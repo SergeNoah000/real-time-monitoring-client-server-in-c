@@ -551,3 +551,8 @@
 [ TUE 14-05-2024 00:31:08 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
 [ TUE 14-05-2024 00:31:26 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
 [ TUE 14-05-2024 01:24:25 ] Warning: Connexion with client 127.0.0.1:52986 lost 
+[ THU 16-05-2024 15:43:39 ] Warning: Connexion with client 192.168.43.212:58172 lost 
+[ THU 16-05-2024 15:45:09 ] Warning: Connexion with client 192.168.43.212:48358 lost 
+[ THU 16-05-2024 15:59:42 ] Warning: Connexion with client 127.0.0.1:55258 lost 
+[ THU 16-05-2024 18:21:08 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ THU 16-05-2024 18:21:31 ] Warning: Connexion with client 127.0.0.1:53300 lost 

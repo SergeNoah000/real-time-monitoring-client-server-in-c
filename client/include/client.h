@@ -26,6 +26,8 @@
 #include <time.h> 
 #include <sys/inotify.h> // for dir watching
 #include <linux/limits.h>
+#include <signal.h>
+#include <setjmp.h>
 
 
 /*

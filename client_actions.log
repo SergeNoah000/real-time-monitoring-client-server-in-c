@@ -992,3 +992,6 @@ mike 0.00 MON 22-04-2024 15:06:37
 [ TUE 14-05-2024 00:31:52 ] Sucess: Sucessfully send 261617 of  jejpdtjm_togetsuite_bar.pdf to 127.0.0.1 
 [ TUE 14-05-2024 00:31:52 ] Info: Receiving 261617 bytes of 'jejpdtjm_togetsuite_bar.pdf' from '127.0.0.1' 
 [ TUE 14-05-2024 00:31:52 ] Success: downloading file jejpdtjm_togetsuite_bar.pdf from 127.0.0.1 finished 
+[ THU 16-05-2024 15:46:35 ] Error: Connexion to the server failled 
+[ THU 16-05-2024 18:21:08 ] Info: Initial state send to the server 
+[ THU 16-05-2024 18:21:08 ] Info: Start listening the incomming upload request 

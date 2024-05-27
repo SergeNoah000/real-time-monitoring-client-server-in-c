@@ -122,11 +122,9 @@ int main(int argc, char *args[]) {
                     kill(pid, SIGKILL);
                 }
                 close(sock);
+                printf("\n\nI didn't know that this is how my life was going to end. Bye !!\n");
                 exit(EXIT_SUCCESS);
-            // case 'p':
-            //     // Start sharing files with the server
-            //     // Add code to initiate file sharing with the server
-            //     break;
+            
             case 's':
                 // Stop sharing files with the server
                 if (pid > 0) {
