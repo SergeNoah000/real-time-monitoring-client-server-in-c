@@ -10,8 +10,3 @@ WORKDIR /app
 # Copier vos fichiers C dans l'image
 COPY . /app
 
-# Compiler vos fichiers C
-RUN make
-
-# Commande par défaut pour démarrer SSH au lancement de l'image
-CMD ["./client_watch", , "6060"]

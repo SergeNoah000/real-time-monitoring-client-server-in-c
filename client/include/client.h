@@ -27,7 +27,8 @@
 #include <sys/inotify.h> // for dir watching
 #include <linux/limits.h>
 #include <signal.h>
-#include <setjmp.h>
+#include <setjmp.h>   // to avoid CRTL+C command in terminal
+#include <openssl/sha.h>   // for calculate sha256 hash
 
 
 /*
@@ -53,6 +54,9 @@
 
 #define MAX_FILES 100
 
+#define PIECE_SIZE 262144
+
+
 // Structure for filereceived information
 typedef struct  {
     char ip[INET_ADDRSTRLEN];
@@ -65,7 +69,7 @@ typedef struct  {
 typedef struct 
 {
     char filename[MAX_FILE_SIZE];
-    double filesize;
+    size_t filesize;
     char last_modified_date[30];
 
 } file_infos;
@@ -113,13 +117,83 @@ void view_files_list(int socket_fd);
 char *search_file(const char *dir_path, const char *filename) ;
 
 
-/// @brief Send the specified file to the specified socket
+/// @brief Send the specified file to the specified socket using bitTorrent protocol
 /// @param fp : relative path to the file
 /// @param sockfd : socket to send the file
 /// @return int : 1 if successful, 0 otherwise
-size_t send_file(const char *fp, int sockfd);
+int send_file_with_bittorent(const char *fp, int sockfd, char request_type_l);
 
 
 // start listening for the the download demand and serve it
 void *upload_file();
+
+/// @brief calculate the hash of the given data 
+/// @param data 
+/// @param length 
+/// @param hash 
+/// @return int : 1 if successful, 0 otherwise
+int calculate_hash(const char *data, size_t length, unsigned char *hash) ;
+
+
+/// @brief Calculte the hash of the given filename 
+/// @param filename  
+/// @param piece_count  the number of piece of the file to facilitate the computation
+/// @param global_hash  the global hash to return
+/// @return 0 if everting went correct - 1 otherwise
+int  calculate_global_hash_from_file(const char *filename, int piece_count, unsigned char *global_hash) ;
+
+/// @brief Write the piece of the given filename and index into socket buffer
+/// @param sockfd 
+/// @param filename 
+/// @param piece_index 
+/// @return  0 if successful write the data into the buffer or -1 if false
+int send_piece(int sockfd, const char *filename, int piece_index);
+
+/// @brief Write  hash list store in memory  **hashes in the socket buffer 
+/// @param sockfd 
+/// @param hashes 
+/// @param piece_count 
+/// @return 0 if successful write the data into the buffer or -1 if false
+int send_hash_list(int sockfd, unsigned char **hashes, int piece_count) ;
+
+
+/// @brief same as send_hash_list but just send the global hash of the file or piece
+/// @param sockfd 
+/// @param global_hash 
+/// @return  0 if successful or -1 if false
+int send_global_hash(int sockfd, unsigned char *global_hash) ;
+
+
+/// @brief get and compute the hash of the file and put it in **hashes list
+/// @param filename 
+/// @param hashes list of hashes returned
+/// @param piece_count 
+/// @return 0 if successful or -1 if false
+int calculate_hashes_from_file(const char *filename, unsigned char **hashes, int piece_count) ;
+
+
+/// @brief  receive a file from another client know as sender with bittorent protocol
+/// @param filename the name of the file
+/// @param sockfd socket file descriptor
+/// @return the number of bytes received or -1 if throw and error
+size_t receive_file_with_bittorent(const char *filename, const int sockfd);
+
+
+/// @brief  receive a file from another client know as sender with FTP protocol
+/// @param filename the name of the file
+/// @param sockfd socket file descriptor
+/// @return the number of bytes received or -1 if throw and error
+size_t receive_file_with_ftp(const char *filename, const int sockfd);
+
+/// @brief Print the progress bar for downloaded file
+/// @param received_bytes the size of the received part of the file
+/// @param file_size the file size in bytes
+void print_progress(size_t received_bytes, size_t file_size) ;
+
+
+/// @brief Send the specified file to the specified socket using the FTP protocol
+/// @param fp : relative path to the file
+/// @param sockfd : socket to send the file
+/// @return int : 1 if successful, 0 otherwise
+size_t send_file_with_ftp(const char *fp, const int sockfd) ;
 #endif
