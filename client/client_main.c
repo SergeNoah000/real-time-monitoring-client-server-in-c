@@ -122,7 +122,7 @@ int main(int argc, char *args[]) {
                     kill(pid, SIGKILL);
                 }
                 close(sock);
-                printf("\n\nI didn't know that this is how my life was going to end. Bye !!\n");
+                printf("\n\n\t\t😨😨 !\nI didn't know that this is how my life was going to end 😑😑😑. \n\n\tBye 😓😓😓😓!!\n");
                 exit(EXIT_SUCCESS);
             
             case 's':

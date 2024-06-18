@@ -15,7 +15,7 @@
 jmp_buf env ;
 
 
-void handle_sigint(int sig) {
+void handle_sigint() {
     longjmp(env, 1);
 }
 
@@ -91,7 +91,7 @@ char *file_infos_to_string(file_infos *files, int num_files) {
 
         // Append size
         char size_str[20]; // Assuming int can be represented in 20 characters
-        sprintf(size_str, " %.2f", files[i].filesize);
+        sprintf(size_str, " %.ld", files[i].filesize);
         strcat(result_string + offset, size_str);
         offset += strlen(size_str);
 
@@ -175,7 +175,7 @@ char *capture_data(){
         stat(filename, &file_stat); // Use full file path
         if (!S_ISDIR(file_stat.st_mode)) {
            snprintf(file_all[number].filename, sizeof(file_all[number].filename), "%s", parent->d_name);
-            file_all[number].filesize = (double ) file_stat.st_size / (1024 * 1024);
+            file_all[number].filesize =  file_stat.st_size ;
             convert_time(file_all[number].last_modified_date, sizeof(file_all[number].last_modified_date), file_stat.st_mtime);
             //strncpy(file_all[file_number].filename, parent->d_name, sizeof(file_all[file_number].filename));
             number++;
@@ -318,30 +318,42 @@ void displayDiagram() {
 /// @param fp 
 /// @param sockfd 
 /// @return size_t size of the reveived file
-size_t receive_file(const char *fp, int sockfd) {
+size_t receive_file_with_ftp(const char *fp, const int sockfd) {
+    // Open the file in write binary mode
     FILE *received_file_desc = fopen(fp, "wb");
     if (received_file_desc == NULL) {
-        log_action("Failed to open the file in receive_file function", "Error");
+        log_action("Failed to open the file in receive_file_with_ftp function", "Error");
         perror("open file");
         return 0;
     }
 
     char data[BUFFER_SIZE];
-    size_t total_bytes_received = 0;
+    size_t file_size, total_bytes_received = 0;
+    recv(sockfd, &file_size, sizeof(file_size), 0);
     ssize_t bytes_received;
-
+    printf("Debut de reception ..\n");
+    printf("Debut de reception ..\n");
     while ((bytes_received = recv(sockfd, data, BUFFER_SIZE, 0)) > 0) {
         size_t bytes_written = fwrite(data, 1, bytes_received, received_file_desc);
-        if (bytes_written <  bytes_received) {
+        if (bytes_written <  (size_t)bytes_received) {
             log_action("Failed to write file data", "Error");
             perror("Error in writing file.");
             fclose(received_file_desc);
             return total_bytes_received;
         }
-        total_bytes_received += bytes_received;
+        total_bytes_received = total_bytes_received + (size_t)bytes_received;
+        print_progress( (size_t)bytes_received, file_size) ;
     }
 
     fclose(received_file_desc);
+    if (total_bytes_received == file_size) {
+        printf("File transfer completed successfully.🎉🎉🎉🥳🥳🥳🎊🎁 \n");
+    }else{
+        printf("Failed to download file with FTP protocol");
+        log_action("Failed to download file with FTP protocol", "Error");
+        perror("open file");
+        return total_bytes_received;
+    }
     return total_bytes_received;
 }
 
@@ -383,6 +395,18 @@ int downloade_file(char *filename, char * ip){
         return -1;
     }
     ssize_t bytes_sent;
+     printf("Which method to download ? \n\t b : for bitTorrent\n\t f : for FTP\n");
+    char method;
+    scanf(" %c", &method);
+    if (method != 'b'){
+        char msg = 'A';
+        send(sock, &msg, sizeof(msg), 0);
+    }else{
+        char msg = 'B';
+        send(sock, &msg, sizeof(msg), 0);
+    }
+    
+
     if ( ( bytes_sent = send(sock, filename, strlen(filename), 0)) == -1) {
         char message[MAX_FILE_SIZE];
         sprintf(message, "Failled to send the filename %s the client %s", filename, ip);
@@ -393,10 +417,14 @@ int downloade_file(char *filename, char * ip){
     size_t size = 0;
     char path[MAX_FILE_SIZE] ;
     sprintf(path, "Downloads/%s", filename);
- 
-    size = receive_file(path, sock);
+   
+    if (method == 'f') {
+        size = receive_file_with_ftp(path, sock);
+    }else{
+        size = receive_file_with_bittorent(path, sock);
+    }
     char message[MAX_FILE_SIZE];
-    sprintf(message, "Receiving %ld bytes of '%s' from '%s'", size , filename, ip );
+    sprintf(message, "Received %ld bytes of '%s' from '%s'", size , filename, ip );
     log_action(message, "Info");
 
     return 0;
@@ -531,112 +559,7 @@ char *search_file(const char *dir_path, const char *filename) {
 
 
 
-
-char *search_file_iterative(const char *dir_path, const char *filename) {
-    DIR *dir;
-    struct dirent *entry;
-    struct stat statbuf;
-    char *filepath = NULL;
-
-    dir = opendir(dir_path);
-    if (dir == NULL) {
-        perror("Erreur lors de l'ouverture du répertoire");
-        return NULL;
-    }
-
-    // Stack to keep track of directories to explore
-    struct StackItem {
-        DIR *dir;
-        char *path;
-    };
-    struct StackItem stack[1000]; // Adjust size as needed
-    int top = -1;
-
-    stack[++top].dir = dir;
-    stack[top].path = strdup(dir_path); // Add the initial directory
-
-    while (top >= 0) {
-        DIR *cur_dir = stack[top].dir;
-        char *cur_path = stack[top].path;
-        top--;
-
-        while ((entry = readdir(cur_dir)) != NULL) {
-            char path[1024];
-            snprintf(path, sizeof(path), "%s/%s", cur_path, entry->d_name);
-
-            if (strcmp(entry->d_name, filename) == 0) {
-                filepath = strdup(path);
-                break;
-            }
-
-            if (stat(path, &statbuf) == -1) {
-                perror("Erreur lors de la récupération des informations sur le fichier");
-                continue;
-            }
-
-            if (S_ISDIR(statbuf.st_mode) && strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
-                // Push the subdirectory onto the stack
-                stack[++top].dir = opendir(path);
-                stack[top].path = strdup(path);
-            }
-        }
-
-        if (filepath != NULL)
-            break; // Exit the outer loop if the file is found
-    }
-
-    // Clean up memory
-    for (int i = 0; i <= top; i++) {
-        closedir(stack[i].dir);
-        free(stack[i].path);
-    }
-
-    closedir(dir);
-    return filepath;
-}
-
-
-char* searchFile(const char *folder, const char *filename) {
-    DIR *dir;
-    struct dirent *entry;
-    struct stat filestat;
-    static char filepath[1024];
-
-    if ((dir = opendir(folder)) == NULL) {
-        perror("opendir");
-        exit(EXIT_FAILURE);
-    }
-
-    while ((entry = readdir(dir)) != NULL) {
-        sprintf(filepath, "%s/%s", folder, entry->d_name);
-        if (stat(filepath, &filestat) == -1) {
-            perror("stat");
-            exit(EXIT_FAILURE);
-        }
-
-        if (S_ISDIR(filestat.st_mode)) {
-            if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
-                continue;
-            char *subfolder = (char*)malloc(strlen(filepath) + 1);
-            strcpy(subfolder, filepath);
-            char *found = searchFile(subfolder, filename);
-            free(subfolder);
-            if (found != NULL) {
-                closedir(dir);
-                return found;
-            }
-        } else if (S_ISREG(filestat.st_mode) && strcmp(entry->d_name, filename) == 0) {
-            closedir(dir);
-            return filepath;
-        }
-    }
-
-    closedir(dir);
-    return NULL;
-}
-
-
-size_t send_file(const char *fp, int sockfd) {
+size_t send_file_with_ftp(const char *fp, const int sockfd) {
     FILE *send_file_desc = fopen(fp, "rb");
     if (send_file_desc == NULL) {
         log_action("Failed to open the file in send_file function", "Error");
@@ -648,6 +571,7 @@ size_t send_file(const char *fp, int sockfd) {
     long file_size = ftell(send_file_desc);
     fseek(send_file_desc, 0, SEEK_SET);
 
+    send(sockfd, &file_size, sizeof(size_t), 0);
     char data[BUFFER_SIZE];
     size_t total_bytes_sent = 0;
     size_t bytes_read;
@@ -664,7 +588,132 @@ size_t send_file(const char *fp, int sockfd) {
     }
 
     fclose(send_file_desc);
-    return total_bytes_sent;
+    if (total_bytes_sent == (size_t)file_size){
+        char message[1024];
+        sprintf(message, "File %s sent successfully", fp);
+        log_action(message, "Success");
+        printf("✔️✔️✔️✔️ Transfert finished 👌👌👌✔️\n\n");
+        return total_bytes_sent;
+    }else{
+        char message[1024];
+        sprintf(message, "Error sending file %s", fp);
+        log_action(message, "Error");
+        perror("Error sending file");
+        return total_bytes_sent;
+    }
+}
+
+
+
+
+int send_file_with_bittorent(const char *filename, int newsockfd, char request_type_l) {
+    int piece_count;
+    struct stat st;
+    if (stat(filename, &st) == 0) {
+        piece_count = (st.st_size + PIECE_SIZE - 1) / PIECE_SIZE;
+    } else {
+        perror("File stat failed");
+        return -1;
+    }
+    unsigned char **hashes = malloc(piece_count * sizeof(unsigned char *));
+    if (hashes == NULL) {
+        log_action("Memory allocation failed for hashes", "Error");
+        fprintf(stderr, "Memory allocation failed for hashes\n");
+        return 1;
+    }
+
+    for (int i = 0; i < piece_count; i++) {
+        hashes[i] = malloc(SHA256_DIGEST_LENGTH);
+        if (hashes[i] == NULL) {
+            fprintf(stderr, "Memory allocation failed for hashes[%d]\n", i);
+            // Libérer les mémoires allouées avant de retourner
+            log_action("Memory allocation failed for hashes", "Error");
+            for (int j = 0; j < i; j++) {
+                free(hashes[j]);
+            }
+            free(hashes);
+            return 1;
+        }
+    }
+    if (calculate_hashes_from_file(filename, hashes, piece_count) != 0){
+        char message[150];
+        sprintf(message, "Failled to calculate hashes of file %s", filename);
+        log_action(message, "Error");
+        return -1;
+    }
+
+    unsigned char global_hash[SHA256_DIGEST_LENGTH];
+    if ( calculate_global_hash_from_file(filename, piece_count, global_hash) != 0){
+        char message[150];
+        sprintf(message, "Failled to calculate global hash of file %s", filename);
+        log_action(message, "Error");
+        return -1;
+    }
+
+    if (request_type_l == 'L') {
+        size_t file_size = st.st_size;
+        send(newsockfd, &piece_count, sizeof(piece_count), 0);
+        send(newsockfd, &file_size, sizeof(file_size), 0);
+        for (int i = 0; i < piece_count; i++) {
+            send(newsockfd, hashes[i], SHA256_DIGEST_LENGTH, 0);
+        }
+        printf("Hash list sent firtly\n\n");
+
+    } 
+
+    while (1) {
+        char request_type;
+        if (recv(newsockfd, &request_type, sizeof(request_type), 0) <= 0) {
+            break;
+        }
+
+        if (request_type == 'L') {
+            size_t file_size = st.st_size;
+            send(newsockfd, &piece_count, sizeof(piece_count), 0);
+            send(newsockfd, &file_size, sizeof(file_size), 0);
+            for (int i = 0; i < piece_count; i++) {
+                send(newsockfd, hashes[i], SHA256_DIGEST_LENGTH, 0);
+            }
+        } 
+        
+        else if (request_type == 'H') {
+            send(newsockfd, global_hash, SHA256_DIGEST_LENGTH, 0);
+        } 
+        
+        else if (request_type == 'P') {
+            int index;
+            recv(newsockfd, &index, sizeof(index), 0);
+            if (send_piece(newsockfd, filename, index) != 0){
+                char message[150];
+                sprintf(message, "Failled to send piece %d of file %s", index, filename);
+                log_action(message, "Error");
+                return -1;
+            }
+        } else if(request_type == 'E') {
+            for (int i = 0; i < piece_count; i++) {
+                if (hashes[i] != NULL) {
+                    free(hashes[i]);
+                    hashes[i] = NULL;  //Pour ne ne pas doubler la libération
+                }
+            }
+            if (hashes != NULL) {
+                free(hashes);
+                hashes = NULL;  
+            }
+
+            printf("✔️✔️✔️✔️ Transfert finished 👌👌👌✔️\n\n");
+            return 0;
+        }
+    }
+
+
+    for (int i = 0; i < piece_count; i++) {
+        free(hashes[i]);
+    }
+    free(hashes);
+
+    return 0;
+
 }
 
 
@@ -707,44 +756,170 @@ void *upload_file( ){
 
     while(true){
         if ((new_socket = accept(other_client_sockef_fd, (struct sockaddr*) &address, (socklen_t *) &addrlen)) < 0){
-                log_action("Failled to accept incomming request", "Error");
-                perror("Failled to accept the incomming upload request");
-                exit(EXIT_FAILURE);
-            }
-            
-            char filename[150] = {0};
-            ssize_t bytes_received = recv(new_socket, filename, BUFFER_SIZE, 0);
-            if( bytes_received == -1 ){
-                log_action("Failled receive the incomming request filename", "Error");
-                perror("recv the incomming request filename");
-                close(new_socket);
-                exit(EXIT_FAILURE);
-            }
+            log_action("Failled to accept incomming request", "Error");
+            perror("Failled to accept the incomming upload request");
+            exit(EXIT_FAILURE);
+        }
 
-            filename[bytes_received] = '\0';
-            char *filepath = searchFile("data", filename);
-            if (filepath == NULL) {
-                log_action("Failled to find the incomming request file", "Error");
-                send(new_socket, "NULL", sizeof("NULL"), 0);
-                close(new_socket);
-                exit(EXIT_FAILURE);
-            }
-           
-            size_t len;  
-            if( (len = send_file(filepath, new_socket)) == 0 ) {
-                log_action("It occurs when trying to send the requested file", "Error");
-                perror("Error sending");
-                close(new_socket);
-                break;
-            }
-            sprintf(filepath, "Sucessfully send %ld of  %s to %s", len,  filename, inet_ntoa(address.sin_addr));
-            log_action(filepath, "Sucess");
+        char method_type;
+        recv(new_socket, &method_type, sizeof(method_type), 0);
+        
+        char filename[150] = {0};
+        ssize_t bytes_received = recv(new_socket, filename, BUFFER_SIZE, 0);
+        if( bytes_received == -1 ){
+            log_action("Failled receive the incomming request filename", "Error");
+            perror("recv the incomming request filename");
             close(new_socket);
+            exit(EXIT_FAILURE);
+        }
+        printf("\n\nNew connexion for the file: %s\n", filename);
+        
+        pid_t pid = fork();
+        if (pid < 0) {
+            log_action("Failled to fork", "Error");
+            perror("Failled to fork");
+            exit(EXIT_FAILURE);
+        }
+        if (pid == 0) {
+            if (method_type == 'A')
+            {
+                char *filepath = search_file("data", filename);
+                send_file_with_ftp(filepath, new_socket);
 
+                sprintf(filepath, "Sucessfully send   %s to %s",  filename, inet_ntoa(address.sin_addr));
+                log_action(filepath, "Sucess");
+                close(new_socket);
+                exit(EXIT_SUCCESS);
+            }else{            
+                filename[bytes_received] = '\0';
+                bool request_type_l = false;
+                if (filename[bytes_received - 1] == 'L') {
+                    filename[bytes_received - 1] = '\0';
+                    request_type_l  = true;
+                }
+                char *filepath = search_file("data", filename);
+                if (filepath == NULL) {
+                    printf("File Not Found: %s\n", filename);
+                    log_action("Failled to find the incomming request file", "Error");
+                    if ( request_type_l) {
+                        if( ( send_file_with_bittorent(filepath, new_socket, 'L')) != 0 ) {
+                            log_action("It occurs when trying to send the requested file", "Error");
+                            perror("Error sending");
+                            close(new_socket);
+                            break;
+                        }
+                    }else{
+                        send(new_socket, "NULL", sizeof("NULL"), 0);
+                        close(new_socket);
+                        exit(EXIT_FAILURE);
+                    }
+                    
+
+                }else  if ( request_type_l) {            
+                        if( ( send_file_with_bittorent(filepath, new_socket, 'L')) != 0 ) {
+                            log_action("It occurs when trying to send the requested file", "Error");
+                            perror("Error sending");
+                            close(new_socket);
+                            break;
+                        }
+                }else if( ( send_file_with_bittorent(filepath, new_socket, 'R')) != 0 ) {
+                    log_action("It occurs when trying to send the requested file", "Error");
+                    perror("Error sending");
+                    close(new_socket);
+                    break;
+                }
+                sprintf(filepath, "Sucessfully send   %s to %s",  filename, inet_ntoa(address.sin_addr));
+                log_action(filepath, "Sucess");
+                close(new_socket);
+                exit(EXIT_SUCCESS);
+            }
+        }
+        printf("Liste to others connexion request .. \n");
     }
-    
     return NULL;
 }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+Pour implémenter un système de transfert de fichiers utilisant des principes similaires à BitTorrent, nous devons écrire du code pour deux côtés : l'envoyeur et le receveur. Le côté envoyeur découpera le fichier, calculera les hashs pour chaque pièce et pour le fichier complet, et répondra aux différentes requêtes du receveur. Le côté receveur demandera et recevra les hashs et les pièces, les vérifiera, et reconstruira le fichier complet.
+
+### Code Côté Envoyeur
+
+#### Étape 1: Découpage du fichier et calcul des hashs
+
+Voici comment découper un fichier et calculer les hashs pour chaque pièce ainsi que pour le fichier complet :
+
+c
+
+*/
+
+
+
+
+
+
+
+
+
+/*
+#### Étape 2: Écouter et traiter les requêtes
+
+Le serveur doit être capable d'écouter et de traiter différentes requêtes du client (demande de hash global, demande de liste des hashs, et demande de morceaux spécifiques).
+
+c
+*/
+
+
+
+/*
+### Code Côté Receveur
+
+#### Étape 1: Recevoir les hashs et le hash global
+
+Le client receveur demandera d'abord les hashs et le hash global, puis demandera les morceaux manquants.
+
+c
+
+*/
+
+
+/*
+
+#### Étape 2: Vérifier les hashs et reconstruire le fichier
+
+Le client vérifie les hashs reçus et reconstruit le fichier.
+
+c
+*/
+
+/*
+### Conclusion
+
+Ce code offre une implémentation de base pour envoyer et recevoir de grandes quantités de données en morceaux, avec des vérifications d'intégrité utilisant des hashs. L'envoyeur découpe le fichier, calcule les hashs pour chaque morceau, et répond aux requêtes des clients pour des listes de hashs, le hash global, ou des morceaux spécifiques. Le receveur demande et vérifie les hashs, puis demande et stocke chaque morceau, reconstruisant le fichier complet et vérifiant son intégrité.
+
+*/

@@ -155,9 +155,12 @@ void *handle_connection(void ) {
             ssize_t bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);
             if (bytes_received <= 0) {
                 close(client_socket);
+                clear_last_lines(2);
                 char log_message[512];
                 sprintf(log_message, "Connexion with client %s:%d lost", inet_ntoa(client_address.sin_addr), ntohs(client_address.sin_port));
-                clear_last_lines(1);
+                printf("\033[1;32m"); // Vert gras
+                printf("Active threads: [ %d ]\n", active_threads + 1);
+                printf("\033[0m"); // Réinitialisation de la couleur
                 fprintf(stdout,"%s\n",  log_message);
                 log_action(log_message, "Warning");
 
@@ -169,20 +172,30 @@ void *handle_connection(void ) {
 
             if (strstr(buffer, "LIST_FILES") != NULL)
             {
-                 clear_last_lines(1);
+                //  clear_last_lines(1);
+                clear_last_lines(2);
                 time_t date_t = time(NULL);
                 char *str_date = malloc(sizeof(char) * 50);
                 convert_time(str_date, sizeof(date_t ) * 4, date_t);
-                printf("[ %s ] Requested list files by %s\n", str_date, inet_ntoa(client_address.sin_addr));
+                char log_message[512];
+                sprintf(log_message, "[ %s ] Requested list files by %s\n", str_date, inet_ntoa(client_address.sin_addr));
+                log_action(log_message, "Info");
+                printf("\033[1;32m"); // Vert gras
+                printf("Active threads: [ %d ]\n", active_threads + 1);
+                printf("\033[0m"); // Réinitialisation de la couleur
+                fprintf(stdout,"%s\n",  log_message);
                 free(str_date);
                 read_and_send_files_infos(FILE_DATA, client_socket);
             }else
             {
             
-                clear_last_lines(1);
+                clear_last_lines(2);
                 time_t date_t = time(NULL);
                 char *str_date = malloc(sizeof(char) * 50);
                 convert_time(str_date, sizeof(date_t ) * 4, date_t);
+                printf("\033[1;32m"); // Vert gras
+                printf("Active threads: [ %d ]\n", active_threads + 1);
+                printf("\033[0m"); // Réinitialisation de la couleur
                 printf("[ %s ] Received data from client %s:%d:\n",str_date, inet_ntoa(client_address.sin_addr),
                     ntohs(client_address.sin_port));
                 

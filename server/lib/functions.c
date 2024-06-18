@@ -75,10 +75,10 @@ char *ascii_to_utf8(const char *ascii_str) {
 
 
 void replace_log_message(const char *ip_address, const char *new_message) {
-    FILE *file_data = fopen(FILE_DATA, "r+");
+    FILE *file_data = fopen(FILE_DATA, "r");
     if (file_data == NULL) {
-        log_action("Failled to open the 'server_data.log' file", "Error");
-        perror("Failled to open 'server_data.log' file");
+        log_action("Failed to open the 'server_data.log' file", "Error");
+        perror("Failed to open 'server_data.log' file");
         exit(EXIT_FAILURE);
     }
 
@@ -86,65 +86,46 @@ void replace_log_message(const char *ip_address, const char *new_message) {
     char temp_file[] = "temp.log";
     FILE *temp = fopen(temp_file, "w");
     if (temp == NULL) {
-        log_action("Failled to open the 'tmp.log' file", "Error");
-        perror("Failled to open 'tmp.log'");
+        log_action("Failed to open the 'temp.log' file", "Error");
+        perror("Failed to open 'temp.log'");
+        fclose(file_data);
         exit(EXIT_FAILURE);
     }
 
-
     bool ip_found = false;
-
-    // Copy lines to temp file, replacing the message if the IP is found
-    bool writing_old_message = false;
     while (fgets(line, sizeof(line), file_data)) {
         if (strstr(line, ip_address) != NULL) {
             ip_found = true;
-            writing_old_message = true;
-        } else if (writing_old_message && strstr(line, "::") != NULL) {
-            writing_old_message = false;
             fprintf(temp, "%s::\n%s\n\n", ip_address, new_message);
-            fprintf(temp, "%s", line); 
-        } else if (!writing_old_message) {
-            fprintf(temp, "%s", line); // Write other lines to temp file
+            // Ignore lines until the next empty line
+            while (fgets(line, sizeof(line), file_data) && strcmp(line, "\n") != 0) {
+                // do nothing, just skip lines
+            }
+        } else {
+            fprintf(temp, "%s", line);
         }
     }
 
-    fprintf(temp, "\0"); 
-    fprintf(file_data, "\0"); 
-
-    //Add the new ip and message if its don't exist in the server_data.log
-    fprintf(file_data, "\n\n%s::\n%s", ip_address, new_message);
-
+    if (!ip_found) {
+        fprintf(temp, "\n\n%s::\n%s\n", ip_address, new_message);
+    }
 
     fclose(file_data);
     fclose(temp);
 
-    if (ip_found)
-    {
-        if (remove(FILE_DATA) != 0) {
-            log_action("Failled to remove 'server_data.log' file", "Error");
-            perror(" Failled to remove 'server_data.log'");
-            exit(EXIT_FAILURE);
-        }
-
-        if (rename(temp_file, FILE_DATA) != 0) {
-            log_action("Failled to rename 'tmp.log' file", "Error");
-            perror(" Failled to rename 'tmp.log'");
-            exit(EXIT_FAILURE);
-        }
+    // Replace original file with temp file
+    if (remove(FILE_DATA) != 0) {
+        log_action("Failed to remove 'server_data.log' file", "Error");
+        perror("Failed to remove 'server_data.log'");
+        exit(EXIT_FAILURE);
     }
-    else
-    {
-        if (remove(temp_file) != 0) {
-            log_action("Failled to remove 'tmp.log' file", "Error");
-            perror(" Failled to remove 'tmp.log'");
-            exit(EXIT_FAILURE);
-        }
-    }
-    
 
+    if (rename(temp_file, FILE_DATA) != 0) {
+        log_action("Failed to rename 'temp.log' file", "Error");
+        perror("Failed to rename 'temp.log'");
+        exit(EXIT_FAILURE);
+    }
 }
-
 
 
 
