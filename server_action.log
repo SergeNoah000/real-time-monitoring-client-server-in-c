@@ -173,3 +173,254 @@
 [ MON 17-06-2024 16:26:48 ] Warning: Connexion with client 127.0.0.1:36434 lost 
 [ MON 17-06-2024 16:27:24 ] Info: [ MON 17-06-2024 16:27:24 ] Requested list files by 127.0.0.1
  
+[ SAT 29-06-2024 18:05:28 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SAT 29-06-2024 18:05:52 ] Info: [ SAT 29-06-2024 18:05:52 ] Requested list files by 127.0.0.1
+ 
+[ SAT 29-06-2024 18:10:40 ] Warning: Connexion with client 127.0.0.1:46926 lost 
+[ SAT 29-06-2024 18:11:29 ] Info: [ SAT 29-06-2024 18:11:29 ] Requested list files by 127.0.0.1
+ 
+[ SAT 29-06-2024 18:11:56 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SAT 29-06-2024 18:12:02 ] Info: [ SAT 29-06-2024 18:12:02 ] Requested list files by 127.0.0.1
+ 
+[ SAT 29-06-2024 18:13:01 ] Info: [ SAT 29-06-2024 18:13:01 ] Requested list files by 127.0.0.1
+ 
+[ SAT 29-06-2024 18:25:47 ] Warning: Connexion with client 127.0.0.1:40226 lost 
+[ SAT 29-06-2024 18:25:48 ] Warning: Connexion with client 127.0.0.1:55580 lost 
+[ SAT 29-06-2024 18:29:13 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SAT 29-06-2024 18:29:23 ] Info: [ SAT 29-06-2024 18:29:23 ] Requested list files by 127.0.0.1
+ 
+[ SAT 29-06-2024 18:31:06 ] Warning: Connexion with client 127.0.0.1:51592 lost 
+[ SAT 29-06-2024 18:50:48 ] Warning: Connexion with client 127.0.0.1:56406 lost 
+[ SAT 29-06-2024 18:55:21 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SAT 29-06-2024 18:55:27 ] Info: [ SAT 29-06-2024 18:55:27 ] Requested list files by 127.0.0.1
+ 
+[ SAT 29-06-2024 18:56:07 ] Info: [ SAT 29-06-2024 18:56:07 ] Requested list files by 127.0.0.1
+ 
+[ SAT 29-06-2024 18:56:54 ] Info: [ SAT 29-06-2024 18:56:54 ] Requested list files by 127.0.0.1
+ 
+[ SAT 29-06-2024 18:57:28 ] Warning: Connexion with client 127.0.0.1:41136 lost 
+[ SAT 29-06-2024 18:57:49 ] Warning: Connexion with client 127.0.0.1:51584 lost 
+[ SUN 30-06-2024 12:27:38 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 12:27:48 ] Info: [ SUN 30-06-2024 12:27:48 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 12:29:23 ] Warning: Connexion with client 127.0.0.1:53866 lost 
+[ SUN 30-06-2024 12:29:39 ] Warning: Connexion with client 127.0.0.1:47352 lost 
+[ SUN 30-06-2024 12:47:39 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 12:47:45 ] Info: [ SUN 30-06-2024 12:47:45 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 13:00:33 ] Warning: Connexion with client 127.0.0.1:57086 lost 
+[ SUN 30-06-2024 13:00:45 ] Warning: Connexion with client 127.0.0.1:33706 lost 
+[ SUN 30-06-2024 13:01:50 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 13:01:58 ] Info: [ SUN 30-06-2024 13:01:58 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 13:04:24 ] Warning: Connexion with client 127.0.0.1:55578 lost 
+[ SUN 30-06-2024 13:04:24 ] Warning: Connexion with client 127.0.0.1:35562 lost 
+[ SUN 30-06-2024 13:05:22 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 13:05:25 ] Info: [ SUN 30-06-2024 13:05:25 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 13:24:08 ] Warning: Connexion with client 127.0.0.1:50906 lost 
+[ SUN 30-06-2024 13:25:10 ] Warning: Connexion with client 127.0.0.1:58444 lost 
+[ SUN 30-06-2024 13:26:07 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 13:26:10 ] Info: [ SUN 30-06-2024 13:26:10 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 13:29:22 ] Warning: Connexion with client 127.0.0.1:47898 lost 
+[ SUN 30-06-2024 13:29:23 ] Warning: Connexion with client 127.0.0.1:39944 lost 
+[ SUN 30-06-2024 13:35:10 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 13:35:17 ] Info: [ SUN 30-06-2024 13:35:17 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 13:41:25 ] Warning: Connexion with client 127.0.0.1:58536 lost 
+[ SUN 30-06-2024 13:41:28 ] Warning: Connexion with client 127.0.0.1:33770 lost 
+[ SUN 30-06-2024 13:41:53 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 13:41:56 ] Info: [ SUN 30-06-2024 13:41:56 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 13:42:14 ] Warning: Connexion with client 127.0.0.1:55470 lost 
+[ SUN 30-06-2024 13:42:21 ] Warning: Connexion with client 127.0.0.1:55486 lost 
+[ SUN 30-06-2024 13:43:32 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 13:43:37 ] Info: [ SUN 30-06-2024 13:43:37 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 13:44:12 ] Warning: Connexion with client 127.0.0.1:54304 lost 
+[ SUN 30-06-2024 13:44:14 ] Warning: Connexion with client 127.0.0.1:57866 lost 
+[ SUN 30-06-2024 13:44:49 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 13:44:54 ] Info: [ SUN 30-06-2024 13:44:54 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 13:45:37 ] Warning: Connexion with client 127.0.0.1:47416 lost 
+[ SUN 30-06-2024 13:45:38 ] Warning: Connexion with client 127.0.0.1:47408 lost 
+[ SUN 30-06-2024 13:50:57 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 13:51:05 ] Info: [ SUN 30-06-2024 13:51:05 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 13:53:04 ] Warning: Connexion with client 127.0.0.1:38818 lost 
+[ SUN 30-06-2024 13:53:04 ] Warning: Connexion with client 127.0.0.1:38812 lost 
+[ SUN 30-06-2024 13:54:47 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 13:54:52 ] Info: [ SUN 30-06-2024 13:54:52 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 13:54:58 ] Warning: Connexion with client 127.0.0.1:36334 lost 
+[ SUN 30-06-2024 14:00:20 ] Warning: Connexion with client 127.0.0.1:36508 lost 
+[ SUN 30-06-2024 14:00:33 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 14:00:50 ] Info: [ SUN 30-06-2024 14:00:50 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 14:01:19 ] Warning: Connexion with client 127.0.0.1:51540 lost 
+[ SUN 30-06-2024 14:01:21 ] Warning: Connexion with client 127.0.0.1:40368 lost 
+[ SUN 30-06-2024 14:01:47 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 14:01:52 ] Info: [ SUN 30-06-2024 14:01:52 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 14:02:27 ] Warning: Connexion with client 127.0.0.1:51034 lost 
+[ SUN 30-06-2024 14:02:30 ] Warning: Connexion with client 127.0.0.1:36602 lost 
+[ SUN 30-06-2024 14:05:26 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 14:05:33 ] Info: [ SUN 30-06-2024 14:05:33 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 14:07:25 ] Warning: Connexion with client 127.0.0.1:39904 lost 
+[ SUN 30-06-2024 14:07:29 ] Warning: Connexion with client 127.0.0.1:39902 lost 
+[ SUN 30-06-2024 14:07:40 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 14:07:47 ] Info: [ SUN 30-06-2024 14:07:47 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 14:13:18 ] Warning: Connexion with client 127.0.0.1:55208 lost 
+[ SUN 30-06-2024 14:13:18 ] Warning: Connexion with client 127.0.0.1:42952 lost 
+[ SUN 30-06-2024 14:14:10 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 14:14:13 ] Info: [ SUN 30-06-2024 14:14:13 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 14:17:45 ] Warning: Connexion with client 127.0.0.1:52976 lost 
+[ SUN 30-06-2024 14:17:45 ] Warning: Connexion with client 127.0.0.1:52988 lost 
+[ SUN 30-06-2024 14:18:04 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 14:18:13 ] Info: [ SUN 30-06-2024 14:18:13 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 14:24:19 ] Warning: Connexion with client 127.0.0.1:34582 lost 
+[ SUN 30-06-2024 14:24:22 ] Warning: Connexion with client 127.0.0.1:39472 lost 
+[ SUN 30-06-2024 14:24:30 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 14:24:39 ] Info: [ SUN 30-06-2024 14:24:39 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 14:34:17 ] Warning: Connexion with client 127.0.0.1:54100 lost 
+[ SUN 30-06-2024 14:34:20 ] Warning: Connexion with client 127.0.0.1:58456 lost 
+[ SUN 30-06-2024 14:36:09 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 14:36:13 ] Info: [ SUN 30-06-2024 14:36:13 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 14:36:32 ] Info: [ SUN 30-06-2024 14:36:32 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 14:37:14 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 14:37:18 ] Info: [ SUN 30-06-2024 14:37:18 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 14:37:45 ] Warning: Connexion with client 127.0.0.1:37630 lost 
+[ SUN 30-06-2024 14:38:06 ] Warning: Connexion with client 127.0.0.1:52598 lost 
+[ SUN 30-06-2024 14:38:07 ] Warning: Connexion with client 127.0.0.1:52592 lost 
+[ SUN 30-06-2024 14:39:49 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 14:39:55 ] Info: [ SUN 30-06-2024 14:39:55 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 14:42:09 ] Warning: Connexion with client 127.0.0.1:51956 lost 
+[ SUN 30-06-2024 14:42:09 ] Warning: Connexion with client 127.0.0.1:43600 lost 
+[ SUN 30-06-2024 18:54:23 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 18:54:26 ] Info: [ SUN 30-06-2024 18:54:26 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 19:00:02 ] Warning: Connexion with client 127.0.0.1:34162 lost 
+[ SUN 30-06-2024 19:00:45 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 19:00:52 ] Info: [ SUN 30-06-2024 19:00:52 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 19:06:43 ] Warning: Connexion with client 127.0.0.1:55474 lost 
+[ SUN 30-06-2024 19:11:46 ] Warning: Connexion with client 127.0.0.1:34168 lost 
+[ SUN 30-06-2024 19:12:13 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 19:12:25 ] Info: [ SUN 30-06-2024 19:12:25 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 19:12:58 ] Info: [ SUN 30-06-2024 19:12:58 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 19:14:05 ] Warning: Connexion with client 127.0.0.1:32964 lost 
+[ SUN 30-06-2024 19:14:11 ] Warning: Connexion with client 127.0.0.1:40638 lost 
+[ SUN 30-06-2024 19:16:59 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 19:17:11 ] Info: [ SUN 30-06-2024 19:17:11 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 19:20:19 ] Warning: Connexion with client 127.0.0.1:38504 lost 
+[ SUN 30-06-2024 19:29:18 ] Warning: Connexion with client 127.0.0.1:46420 lost 
+[ SUN 30-06-2024 19:29:48 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 19:29:56 ] Info: [ SUN 30-06-2024 19:29:56 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 19:32:03 ] Warning: Connexion with client 127.0.0.1:36604 lost 
+[ SUN 30-06-2024 19:34:43 ] Warning: Connexion with client 127.0.0.1:57330 lost 
+[ SUN 30-06-2024 19:34:55 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 19:35:02 ] Info: [ SUN 30-06-2024 19:35:02 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 19:42:31 ] Warning: Connexion with client 127.0.0.1:60056 lost 
+[ SUN 30-06-2024 19:42:40 ] Warning: Connexion with client 127.0.0.1:60068 lost 
+[ SUN 30-06-2024 19:43:38 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 19:43:43 ] Info: [ SUN 30-06-2024 19:43:43 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 19:44:55 ] Warning: Connexion with client 127.0.0.1:35060 lost 
+[ SUN 30-06-2024 19:44:58 ] Warning: Connexion with client 127.0.0.1:40608 lost 
+[ SUN 30-06-2024 19:47:22 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 19:47:28 ] Info: [ SUN 30-06-2024 19:47:28 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 19:48:12 ] Warning: Connexion with client 127.0.0.1:56388 lost 
+[ SUN 30-06-2024 19:48:20 ] Warning: Connexion with client 127.0.0.1:36850 lost 
+[ SUN 30-06-2024 19:48:46 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 19:49:04 ] Info: [ SUN 30-06-2024 19:49:04 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 19:49:43 ] Warning: Connexion with client 127.0.0.1:38016 lost 
+[ SUN 30-06-2024 19:49:55 ] Warning: Connexion with client 127.0.0.1:34020 lost 
+[ SUN 30-06-2024 19:50:12 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 19:50:21 ] Info: [ SUN 30-06-2024 19:50:21 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 19:51:23 ] Warning: Connexion with client 127.0.0.1:52052 lost 
+[ SUN 30-06-2024 19:51:28 ] Warning: Connexion with client 127.0.0.1:58048 lost 
+[ SUN 30-06-2024 19:51:38 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 19:51:50 ] Info: [ SUN 30-06-2024 19:51:50 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 19:53:23 ] Warning: Connexion with client 127.0.0.1:53468 lost 
+[ SUN 30-06-2024 19:53:33 ] Warning: Connexion with client 127.0.0.1:53478 lost 
+[ SUN 30-06-2024 19:55:01 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 19:55:07 ] Info: [ SUN 30-06-2024 19:55:07 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 19:55:40 ] Warning: Connexion with client 127.0.0.1:35720 lost 
+[ SUN 30-06-2024 19:55:42 ] Warning: Connexion with client 127.0.0.1:37192 lost 
+[ SUN 30-06-2024 20:06:45 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 20:06:56 ] Info: [ SUN 30-06-2024 20:06:56 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 20:08:50 ] Warning: Connexion with client 127.0.0.1:50918 lost 
+[ SUN 30-06-2024 20:09:02 ] Warning: Connexion with client 127.0.0.1:41002 lost 
+[ SUN 30-06-2024 20:09:14 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 20:09:16 ] Info: [ SUN 30-06-2024 20:09:16 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 20:12:22 ] Warning: Connexion with client 127.0.0.1:36884 lost 
+[ SUN 30-06-2024 20:12:29 ] Warning: Connexion with client 127.0.0.1:54254 lost 
+[ SUN 30-06-2024 20:17:03 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 20:17:10 ] Info: [ SUN 30-06-2024 20:17:10 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 20:17:42 ] Warning: Connexion with client 127.0.0.1:56930 lost 
+[ SUN 30-06-2024 20:23:46 ] Warning: Connexion with client 127.0.0.1:46098 lost 
+[ SUN 30-06-2024 20:23:55 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 20:24:00 ] Info: [ SUN 30-06-2024 20:24:00 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 20:29:34 ] Warning: Connexion with client 127.0.0.1:43928 lost 
+[ SUN 30-06-2024 20:29:38 ] Warning: Connexion with client 127.0.0.1:43938 lost 
+[ SUN 30-06-2024 20:29:57 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 20:30:03 ] Info: [ SUN 30-06-2024 20:30:03 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 20:30:50 ] Info: [ SUN 30-06-2024 20:30:50 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 20:31:26 ] Info: [ SUN 30-06-2024 20:31:26 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 20:38:25 ] Warning: Connexion with client 127.0.0.1:57100 lost 
+[ SUN 30-06-2024 20:38:28 ] Warning: Connexion with client 127.0.0.1:48646 lost 
+[ SUN 30-06-2024 20:38:44 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 20:38:54 ] Warning: Connexion with client 127.0.0.1:59256 lost 
+[ SUN 30-06-2024 20:38:59 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 20:39:08 ] Warning: Connexion with client 127.0.0.1:51894 lost 
+[ SUN 30-06-2024 20:39:19 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 20:39:29 ] Info: [ SUN 30-06-2024 20:39:29 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 20:41:29 ] Warning: Connexion with client 127.0.0.1:37372 lost 
+[ SUN 30-06-2024 20:41:35 ] Warning: Connexion with client 127.0.0.1:33250 lost 
+[ SUN 30-06-2024 20:41:45 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 20:41:54 ] Info: [ SUN 30-06-2024 20:41:54 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 20:52:43 ] Warning: Connexion with client 127.0.0.1:50864 lost 
+[ SUN 30-06-2024 20:52:58 ] Warning: Connexion with client 127.0.0.1:50856 lost 
+[ SUN 30-06-2024 21:31:33 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 21:31:41 ] Info: [ SUN 30-06-2024 21:31:41 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 21:36:14 ] Warning: Connexion with client 127.0.0.1:60570 lost 
+[ SUN 30-06-2024 21:36:14 ] Warning: Connexion with client 127.0.0.1:34582 lost 
+[ SUN 30-06-2024 21:38:23 ] Info: Update 'server_data.log' caused by client  ``127.0.0.1``  
+[ SUN 30-06-2024 21:38:30 ] Info: [ SUN 30-06-2024 21:38:30 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 21:41:14 ] Info: [ SUN 30-06-2024 21:41:14 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 21:41:33 ] Info: [ SUN 30-06-2024 21:41:33 ] Requested list files by 127.0.0.1
+ 
+[ SUN 30-06-2024 21:46:54 ] Warning: Connexion with client 127.0.0.1:56138 lost 
+[ SUN 30-06-2024 21:47:00 ] Warning: Connexion with client 127.0.0.1:57124 lost 

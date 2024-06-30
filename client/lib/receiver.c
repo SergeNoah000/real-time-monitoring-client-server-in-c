@@ -141,22 +141,38 @@ void save_piece_to_file(const char *filename, const Piece *piece) {
     fwrite(piece->data, 1, piece->length, file);
     fclose(file);
 }
+// Fonction pour créer tous les répertoires intermédiaires nécessaires
+void create_directories_recursively(const char *path) {
+    char temp[1024];
+    snprintf(temp, sizeof(temp), "%s", path);
+    
+    for (char *p = temp + 1; *p; p++) {
+        if (*p == '/') {
+            *p = '\0';
+            mkdir(temp, 0777); // Crée le répertoire si ce n'est pas déjà fait
+            *p = '/';
+        }
+    }
+    mkdir(temp, 0777); // Crée le dernier répertoire
+}
 
 int save_hash_list(const char *filename, unsigned char **hashes, int piece_count, unsigned char *global_hash, size_t file_size) {
     char path[1024];
     sprintf(path, "Downloads/_%s/.hash", filename);
 
-    if (access(path, F_OK) != 0) {
-        char dir_path[1024];
-        sprintf(dir_path, "Downloads/_%s/", filename);
-        mkdir(dir_path, 0777);
-    }
+    // Crée tous les répertoires nécessaires
+    char dir_path[1024];
+    sprintf(dir_path, "Downloads/_%s/", filename);
+    create_directories_recursively(dir_path);
 
+    // Essaye d'ouvrir le fichier
     FILE *file = fopen(path, "wb");
     if (!file) {
         perror("File open failed");
         return -1;
     }
+
+    // Écrit les données dans le fichier
     fwrite(&file_size, sizeof(file_size), 1, file);
     fwrite(&piece_count, sizeof(piece_count), 1, file);
     fwrite(global_hash, SHA256_DIGEST_LENGTH, 1, file);
@@ -164,9 +180,9 @@ int save_hash_list(const char *filename, unsigned char **hashes, int piece_count
         fwrite(hashes[i], SHA256_DIGEST_LENGTH, 1, file);
     }
     fclose(file);
+
     return 0;
 }
-
 int load_hash_list(const char *filename, unsigned char ***hashes, int *piece_count, unsigned char *global_hash, size_t *file_size) {
     // printf("Ok pour la fonction load_hash_list\n\n");
     char path[1024];
@@ -486,7 +502,7 @@ size_t receive_file_with_bittorent(const char *filename, const int sockfd) {
         if (load_hash_list(filename, &hashes, &piece_count, global_hash, &file_size) != 0) {
             log_action("Failed to load the hash list from file", "Error");
             perror("Failed to load the hash list from file");
-            return -1;
+            return 0;
         }
         // printf("Hash list loaded\n\n");
     } else {
@@ -494,12 +510,12 @@ size_t receive_file_with_bittorent(const char *filename, const int sockfd) {
         if (receive_hashes(sockfd, &hashes, &piece_count, &file_size, global_hash) !=0){
             log_action("Failed to receive_hashes from sender", "Error");
             perror("Failed to receive hashes from sender");
-            return -1;
+            return 0;
         }
         if(save_hash_list(filename, hashes, piece_count, global_hash, file_size) !=0){
             log_action("Failed to save the hash_list hash in file", "Error");
             perror("Failed to save the hash_list hash in file");
-            return -1;
+            return 0;
         }
         // printf("Hash list received\n\n");
     }
@@ -524,7 +540,7 @@ size_t receive_file_with_bittorent(const char *filename, const int sockfd) {
     if (reconstruct_file(filename, PIECE_SIZE, piece_count) != 0) {
             log_action("Failed toreconstruct file ", "Error");
             perror("Failed to reconstruct file");
-            return -1;
+            return 0;
     }
 
     unsigned char calculated_global_hash[SHA256_DIGEST_LENGTH];

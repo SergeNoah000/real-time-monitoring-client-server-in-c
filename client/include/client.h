@@ -29,6 +29,7 @@
 #include <signal.h>
 #include <setjmp.h>   // to avoid CRTL+C command in terminal
 #include <openssl/sha.h>   // for calculate sha256 hash
+#include <fcntl.h>
 
 
 /*
@@ -44,7 +45,7 @@
 */
 
 
-#define BUFFER_SIZE 1024    
+#define BUFFER_SIZE 4096  
 #define MAX_FILE_SIZE 1024
 #define LOG_FILE "client_actions.log"
 
@@ -110,10 +111,10 @@ void displayDiagram();
 void view_files_list(int socket_fd);
 
 // Return relative path from  the caller dir and filename
-/// @brief 
+/// @brief Search `file` in the `dir_path`
 /// @param char * dir_path 
 /// @param char * filename 
-/// @return char *
+/// @return char * the relative path to the file or NULL if it doesn't exist
 char *search_file(const char *dir_path, const char *filename) ;
 
 
@@ -128,9 +129,9 @@ int send_file_with_bittorent(const char *fp, int sockfd, char request_type_l);
 void *upload_file();
 
 /// @brief calculate the hash of the given data 
-/// @param data 
-/// @param length 
-/// @param hash 
+/// @param data the string to calculate hash from
+/// @param length length of the string
+/// @param hash The hash variable pointer 
 /// @return int : 1 if successful, 0 otherwise
 int calculate_hash(const char *data, size_t length, unsigned char *hash) ;
 
@@ -196,4 +197,21 @@ void print_progress(size_t received_bytes, size_t file_size) ;
 /// @param sockfd : socket to send the file
 /// @return int : 1 if successful, 0 otherwise
 size_t send_file_with_ftp(const char *fp, const int sockfd) ;
+
+
+/// @brief Download file using the HTTP/1.1 protocol in the socket file descriptor
+/// @param ip IP address to request file
+/// @param sockfd socket file descriptor
+/// @param filename The name of the file to download
+/// @return The size of the file downloaded
+size_t download_file_with_http(const char *ip, const int sockfd, const char *filename); 
+
+
+
+
+/// @brief Upload file using the HTTP/1.1 protocol in the socket file descriptor
+/// @param client_socket the socket of connection
+/// @param filename the relative path of the file
+/// @return The size of the file uploaded
+size_t upload_with_http(int client_socket, const char *filename);
 #endif

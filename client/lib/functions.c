@@ -314,6 +314,25 @@ void displayDiagram() {
     printf("\nCredits: Serge Noah (Master I SE & RESEAU)\n");
 }
 
+
+
+void progress_bar_ftp(size_t downloaded_size, size_t total_size) {
+        int bar_width = 70;
+        float progress = (float)downloaded_size / (float)total_size;
+        int pos = bar_width * progress;
+
+        printf("[");
+        for (int i = 0; i < bar_width; ++i) {
+            if (i < pos) {
+                printf("░");  // emoji for the loaded part
+            } else {
+                printf(" ");
+            }
+        }
+        printf("] %0.2f%%\r", progress * 100);
+        fflush(stdout);
+    }
+
 /// @brief Receive a file from the sockfd socket and save it in fp
 /// @param fp 
 /// @param sockfd 
@@ -328,12 +347,13 @@ size_t receive_file_with_ftp(const char *fp, const int sockfd) {
     }
 
     char data[BUFFER_SIZE];
-    size_t file_size, total_bytes_received = 0;
+    size_t file_size = 0, total_bytes_received = 0;
     recv(sockfd, &file_size, sizeof(file_size), 0);
     ssize_t bytes_received;
+    printf("Debut de reception  de %ld ..\n", file_size);
     printf("Debut de reception ..\n");
-    printf("Debut de reception ..\n");
-    while ((bytes_received = recv(sockfd, data, BUFFER_SIZE, 0)) > 0) {
+    bytes_received = recv(sockfd, data, BUFFER_SIZE, 0);
+    while (bytes_received  > 0) {
         size_t bytes_written = fwrite(data, 1, bytes_received, received_file_desc);
         if (bytes_written <  (size_t)bytes_received) {
             log_action("Failed to write file data", "Error");
@@ -341,20 +361,29 @@ size_t receive_file_with_ftp(const char *fp, const int sockfd) {
             fclose(received_file_desc);
             return total_bytes_received;
         }
-        total_bytes_received = total_bytes_received + (size_t)bytes_received;
-        print_progress( (size_t)bytes_received, file_size) ;
+        total_bytes_received = bytes_received + total_bytes_received ;
+        progress_bar_ftp(total_bytes_received, file_size);
+        if((float)total_bytes_received == (float)file_size){
+            printf("File transfer completed successfully.🎉🎉🎉🥳🥳🥳🎊🎁 \n");
+            fclose(received_file_desc);
+            close(sockfd);
+            return total_bytes_received;
+        }
+        bytes_received = recv(sockfd, data, BUFFER_SIZE, 0);
     }
 
     fclose(received_file_desc);
     if (total_bytes_received == file_size) {
         printf("File transfer completed successfully.🎉🎉🎉🥳🥳🥳🎊🎁 \n");
+        close(sockfd);
+        return total_bytes_received;
     }else{
         printf("Failed to download file with FTP protocol");
         log_action("Failed to download file with FTP protocol", "Error");
         perror("open file");
+        close(sockfd);
         return total_bytes_received;
     }
-    return total_bytes_received;
 }
 
 
@@ -395,13 +424,16 @@ int downloade_file(char *filename, char * ip){
         return -1;
     }
     ssize_t bytes_sent;
-     printf("Which method to download ? \n\t b : for bitTorrent\n\t f : for FTP\n");
+     printf("Which method to download ? \n\t b : for bitTorrent\n\t f : for FTP\n\t h : for HTTP\n");
     char method;
     scanf(" %c", &method);
-    if (method != 'b'){
+    if (method == 'f'){
         char msg = 'A';
         send(sock, &msg, sizeof(msg), 0);
-    }else{
+    }else if (method == 'h'){
+        char msg = 'C';
+        send(sock, &msg, sizeof(msg), 0);
+    }else {
         char msg = 'B';
         send(sock, &msg, sizeof(msg), 0);
     }
@@ -420,8 +452,10 @@ int downloade_file(char *filename, char * ip){
    
     if (method == 'f') {
         size = receive_file_with_ftp(path, sock);
+    }else if (method == 'h') {
+        size = download_file_with_http(ip, sock, filename );
     }else{
-        size = receive_file_with_bittorent(path, sock);
+        size = receive_file_with_bittorent(filename, sock);
     }
     char message[MAX_FILE_SIZE];
     sprintf(message, "Received %ld bytes of '%s' from '%s'", size , filename, ip );
@@ -429,6 +463,22 @@ int downloade_file(char *filename, char * ip){
 
     return 0;
 }
+
+
+
+void human_readable_size(size_t size, char *output) {
+    const char *units[] = {"octets", "Ko", "Mo", "Go", "To", "Po"};
+    int unit_index = 0;
+    double human_size = size;
+
+    while (human_size >= 1024 && unit_index < 5) {
+        human_size /= 1024;
+        unit_index++;
+    }
+
+    snprintf(output, 20, "%.2f %s", human_size, units[unit_index]);
+}
+
 
 
 // Function to display the list of files
@@ -462,7 +512,7 @@ void view_files_list(int sock) {
 
 
             // Displaying the list of files with index, name, and modification date
-            printf("\n\nIndex\tFilename\tSize (Mo)\tModification Date\n");
+            printf("\n\nIndex\t Filename\t\t Size \t\tModification Date\n");
             printf("-------------------------------------------------\n");
             if (file_count ==0 )
             {
@@ -472,9 +522,11 @@ void view_files_list(int sock) {
             }
             else{
                 for (int i = 0; i < file_count; i++) {
-                    printf("[%d]\t%s\t\t%ld\t\t%s\n", i+1 ,
+                    char output[20];
+                    human_readable_size(files[i].size, output);
+                    printf("[%d]\t%s\t\t%s\t\t%s\n", i+1,
                     files[i].filename,
-                    files[i].size,
+                    output,
                     files[i].modification_date);
                 }
 
@@ -482,6 +534,12 @@ void view_files_list(int sock) {
                 printf("\nEnter the index of the file to download (Ctrl+C to return to the menu): ");
                 int file_index;
                 scanf("%d", &file_index);
+                while (file_index > file_count)
+                {
+                    printf("Choose a correct number, %d is not in listed below:", file_index);
+                    scanf("%d", &file_index);
+                }
+                
 
                 // Code to download the file with the given index
                 printf("\n\n\n Downloading file %s with index %d...\n", files[file_index-1].filename,  file_index);
@@ -509,11 +567,7 @@ void view_files_list(int sock) {
         }
 }
 
-// Return relative path from  the caller dir and filename
-/// @brief 
-/// @param dir_path 
-/// @param filename 
-/// @return char *
+
 char *search_file(const char *dir_path, const char *filename) {
     DIR *dir;
     struct dirent *entry;
@@ -570,8 +624,9 @@ size_t send_file_with_ftp(const char *fp, const int sockfd) {
     fseek(send_file_desc, 0, SEEK_END);
     long file_size = ftell(send_file_desc);
     fseek(send_file_desc, 0, SEEK_SET);
+    printf("Size of file: %ld", file_size);
 
-    send(sockfd, &file_size, sizeof(size_t), 0);
+    send(sockfd, &file_size, sizeof(file_size), 0);
     char data[BUFFER_SIZE];
     size_t total_bytes_sent = 0;
     size_t bytes_read;
@@ -590,8 +645,9 @@ size_t send_file_with_ftp(const char *fp, const int sockfd) {
     fclose(send_file_desc);
     if (total_bytes_sent == (size_t)file_size){
         char message[1024];
-        sprintf(message, "File %s sent successfully", fp);
+        sprintf(message, "File %s sent successfully with FTP", fp);
         log_action(message, "Success");
+        close(sockfd);
         printf("✔️✔️✔️✔️ Transfert finished 👌👌👌✔️\n\n");
         return total_bytes_sent;
     }else{
@@ -635,6 +691,7 @@ int send_file_with_bittorent(const char *filename, int newsockfd, char request_t
             return 1;
         }
     }
+    printf("Compute hash of pieces\n");
     if (calculate_hashes_from_file(filename, hashes, piece_count) != 0){
         char message[150];
         sprintf(message, "Failled to calculate hashes of file %s", filename);
@@ -783,14 +840,24 @@ void *upload_file( ){
         if (pid == 0) {
             if (method_type == 'A')
             {
+                printf("FTP method choosed\n\n");
                 char *filepath = search_file("data", filename);
                 send_file_with_ftp(filepath, new_socket);
 
-                sprintf(filepath, "Sucessfully send   %s to %s",  filename, inet_ntoa(address.sin_addr));
+                sprintf(filepath, "Sucessfully send   %s to %s with FTP method",  filename, inet_ntoa(address.sin_addr));
                 log_action(filepath, "Sucess");
                 close(new_socket);
                 exit(EXIT_SUCCESS);
-            }else{            
+            }else if (method_type == 'C'){
+                printf("HTTP method choosed\n\n");
+                char *filepath = search_file("data", filename);
+                upload_with_http(new_socket, filepath );
+
+                sprintf(filepath, "Sucessfully send   %s to %s with HTTP/1.1",  filename, inet_ntoa(address.sin_addr));
+                log_action(filepath, "Sucess");
+                // close(new_socket);
+                exit(EXIT_SUCCESS);
+            }  else{            
                 filename[bytes_received] = '\0';
                 bool request_type_l = false;
                 if (filename[bytes_received - 1] == 'L') {
@@ -834,7 +901,7 @@ void *upload_file( ){
                 exit(EXIT_SUCCESS);
             }
         }
-        printf("Liste to others connexion request .. \n");
+        printf("Listen to others connexion request .. \n");
     }
     return NULL;
 }
@@ -923,3 +990,182 @@ c
 Ce code offre une implémentation de base pour envoyer et recevoir de grandes quantités de données en morceaux, avec des vérifications d'intégrité utilisant des hashs. L'envoyeur découpe le fichier, calcule les hashs pour chaque morceau, et répond aux requêtes des clients pour des listes de hashs, le hash global, ou des morceaux spécifiques. Le receveur demande et vérifie les hashs, puis demande et stocke chaque morceau, reconstruisant le fichier complet et vérifiant son intégrité.
 
 */
+
+
+
+
+
+
+
+
+
+
+
+void progress_bar_http(long long current, long long total) {
+    int barWidth = 70;
+    float progress = (float)current / total;
+
+    printf("[ ");
+    int pos = barWidth * progress;
+    for (int i = 0; i < barWidth; ++i) {
+        if (i < pos) printf("▓");
+        else if (i == pos) printf("_");
+        else printf(" ");
+    }
+    printf(" ] %0.2f%%\r", progress * 100.0);
+    fflush(stdout);
+}
+
+
+
+
+
+
+size_t download_file_with_http(const char *ip, const int sockfd, const char *filename) {
+    char request[BUFFER_SIZE], response[BUFFER_SIZE];
+
+    int header_end = 0;
+    size_t bytes_received = 0, total_size = 0, downloaded_size = 0;
+
+    // // Send HTTP GET request
+    // snprintf(request, sizeof(request), "GET /%s HTTP/1.1\r\nHost: %s\r\nConnection: close\r\n\r\n", filename, ip);
+    // send(sockfd, request, strlen(request), 0);
+
+    char path[MAX_FILE_SIZE];
+    snprintf(path, sizeof(path), "Downloads/%s", filename);
+    FILE *fp = fopen(path, "wb");
+    if (!fp) {
+        perror("File opening failed");
+        close(sockfd);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("HTTP method: HTTP Request Sent\n\n");
+    // Receive response
+    while ((bytes_received = recv(sockfd, response, BUFFER_SIZE, 0)) > 0) {
+        if (!header_end) {
+            // Find end of header
+            char *header_end_ptr = strstr(response, "\r\n\r\n");
+            if (header_end_ptr) {
+                header_end = 1;
+                size_t header_size = header_end_ptr - response + 4;
+                fwrite(header_end_ptr + 4, 1, bytes_received - header_size, fp);
+                downloaded_size += bytes_received - header_size;
+
+                // Extract Content-Length from header
+                char *content_length_str = strstr(response, "Content-Length: ");
+                if (content_length_str) {
+                    content_length_str += 16; // Length of "Content-Length: "
+                    char *content_length_end = strstr(content_length_str, "\r\n");
+                    if (content_length_end) {
+                        char content_length_val[32];
+                        strncpy(content_length_val, content_length_str, content_length_end - content_length_str);
+                        content_length_val[content_length_end - content_length_str] = '\0';
+                        total_size = strtoul(content_length_val, NULL, 10);
+                    }
+                }
+            }
+        } else {
+            fwrite(response, 1, bytes_received, fp);
+            downloaded_size += bytes_received;
+        }
+
+        // Display progress bar
+        if (total_size > 0) {
+            progress_bar_http(downloaded_size, total_size);
+        }
+        if (total_size == downloaded_size && total_size != 0)
+        {            
+            fclose(fp);
+            close(sockfd);
+            printf("\nDownload complete!\n");
+            return downloaded_size;
+        }
+        
+    }
+    printf("\nDownload complete!\n");
+
+    fclose(fp);
+    close(sockfd);
+
+    return downloaded_size;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+size_t upload_with_http(int client_socket, const char *filename) {
+    printf("HTTP method: begin\n\n");
+    size_t bytes_read = 0, bytes_written = 0;
+    char buffer[BUFFER_SIZE];
+    // while ((bytes_written = (size_t)recv(client_socket, &buffer[bytes_read], MAX_FILE_SIZE, 0)) > 0) {
+    //     bytes_read = bytes_read + bytes_written;
+    // }
+    // if (bytes_read <= 0) {
+    //     perror("Reading from socket failed");
+    //     return 0;
+    // }
+    // buffer[bytes_read] = '\0';
+
+    printf("HTTP method: HTTP request received\n\n");
+    size_t total_bytes = 0;
+
+    // Parse HTTP request
+    // if (strncmp(buffer, "GET ", 4) == 0) {
+        FILE *fp = fopen(filename, "rb");
+        if (!fp) {
+            const char *not_found_response = "HTTP/1.1 404 Not Found\r\n\r\nFile not found!";
+            send(client_socket, not_found_response, strlen(not_found_response), 0);
+            perror("HTTP/1.1 404 Not Found");
+            return 0;
+        }
+
+        // Get file size
+        fseek(fp, 0, SEEK_END);
+        long file_size = ftell(fp);
+        fseek(fp, 0, SEEK_SET);
+
+        printf("HTTP method: Begin to send headers\n\n");
+        // Send HTTP response headers
+        char header[BUFFER_SIZE];
+        snprintf(header, sizeof(header),
+                 "HTTP/1.1 200 OK\r\n"
+                 "Content-Length: %ld\r\n"
+                 "Content-Type: application/octet-stream\r\n"
+                 "Connection: close\r\n\r\n", file_size);
+        send(client_socket, header, strlen(header), 0);
+
+        // Send file content
+        while ((bytes_read = fread(buffer, 1, sizeof(buffer), fp)) > 0) {
+            send(client_socket, buffer, bytes_read, 0);
+            total_bytes += bytes_read;
+        }
+
+        fclose(fp);
+        char message[1024];
+        sprintf(message, "File %s sent successfully with HTTP", filename);
+        log_action(message, "Success");
+        printf("✔️✔️✔️✔️ Transfer finished 👌👌👌✔️\n\n");
+        printf("File %s uploaded successfully!\n", filename);
+    // } else {
+    //     const char *bad_request_response = "HTTP/1.1 400 Bad Request\r\n\r\nUnsupported request!";
+    //     send(client_socket, bad_request_response, strlen(bad_request_response), 0);
+    //     char message[1024];
+    //     sprintf(message, "File %s sent failed with HTTP", filename);
+    //     log_action(message, "Error");
+    //     printf("✔️✔️✔️✔️ Transfer Failed 😓 😓.\n\n");
+    //     printf("An error occurred when trying to transfer the file: %s!\n", filename);
+    // }
+
+    return total_bytes;
+}
