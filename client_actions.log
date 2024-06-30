@@ -13379,3 +13379,8 @@ mike 0.00 MON 22-04-2024 15:06:37
 [ SUN 30-06-2024 21:43:31 ] Success: File data/Ballerine.2023_SharClub.mkv sent successfully with HTTP 
 [ SUN 30-06-2024 21:43:31 ] Info: Received 1381865313 bytes of 'Ballerine.2023_SharClub.mkv' from '127.0.0.1' 
 [ SUN 30-06-2024 21:43:31 ] Success: downloading file Ballerine.2023_SharClub.mkv from 127.0.0.1 finished 
+[ SUN 30-06-2024 22:45:50 ] Info: Start listening the incomming upload request 
+[ SUN 30-06-2024 22:45:50 ] Info: Initial state send to the server 
+[ SUN 30-06-2024 22:47:05 ] Success: File data/attestaionImmatriculation.pdf sent successfully with FTP 
+[ SUN 30-06-2024 22:47:05 ] Info: Received 35733 bytes of 'attestaionImmatriculation.pdf' from '127.0.0.1' 
+[ SUN 30-06-2024 22:47:05 ] Success: downloading file attestaionImmatriculation.pdf from 127.0.0.1 finished 

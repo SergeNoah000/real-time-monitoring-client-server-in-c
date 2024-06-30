@@ -479,6 +479,18 @@ void human_readable_size(size_t size, char *output) {
     snprintf(output, 20, "%.2f %s", human_size, units[unit_index]);
 }
 
+bool is_valid_file(FileInfo file) {
+    return strlen(file.filename) > 0 && strlen(file.modification_date) > 0 && file.size > 0;
+}
+
+bool is_duplicate(FileInfo files[], int count, FileInfo file) {
+    for (int i = 0; i < count; i++) {
+        if (strcmp(files[i].filename, file.filename) == 0) {
+            return true;
+        }
+    }
+    return false;
+}
 
 
 // Function to display the list of files
@@ -512,48 +524,61 @@ void view_files_list(int sock) {
 
 
             // Displaying the list of files with index, name, and modification date
-            printf("\n\nIndex\t Filename\t\t Size \t\tModification Date\n");
+             printf("\n\nIndex\t Filename\t\t Size \t\tModification Date\n");
             printf("-------------------------------------------------\n");
-            if (file_count ==0 )
-            {
+
+            if (file_count == 0) {
                 printf("No files found\n");
                 log_action("No files found", "Info");
                 return;
-            }
-            else{
+            } else {
+                int valid_file_count = 0;
                 for (int i = 0; i < file_count; i++) {
-                    char output[20];
-                    human_readable_size(files[i].size, output);
-                    printf("[%d]\t%s\t\t%s\t\t%s\n", i+1,
-                    files[i].filename,
-                    output,
-                    files[i].modification_date);
+                    if (is_valid_file(files[i])) {
+                        if (!is_duplicate(files, i, files[i])) {
+                            valid_file_count++;
+                            char output[20];
+                            human_readable_size(files[i].size, output);
+                            printf("[%d]\t%s\t\t%s\t\t%s\n", valid_file_count, files[i].filename, output, files[i].modification_date);
+                        }
+                    }
+                }
+
+                if (valid_file_count == 0) {
+                    printf("No valid files found\n");
+                    log_action("No valid files found", "Info");
+                    return;
                 }
 
                 // Interaction with the user for downloading or returning to the menu
                 printf("\nEnter the index of the file to download (Ctrl+C to return to the menu): ");
                 int file_index;
                 scanf("%d", &file_index);
-                while (file_index > file_count)
-                {
-                    printf("Choose a correct number, %d is not in listed below:", file_index);
+                while (file_index > valid_file_count || file_index < 1) {
+                    printf("\nChoose a correct number, %d is not in the list below: ", file_index);
                     scanf("%d", &file_index);
                 }
-                
 
-                // Code to download the file with the given index
-                printf("\n\n\n Downloading file %s with index %d...\n", files[file_index-1].filename,  file_index);
-
-                // Code to download the file with the given index file
-                if ( downloade_file(files[file_index-1].filename, files[file_index-1].ip) == -1 ){
-                    //log_action("Failling in the download_file function", "Error");
-                    char message[1024];
-                    sprintf(message, "Error downloading file %s from %s", files[file_index-1].filename, files[file_index-1].ip);
-                    printf("%s", message);
-                    log_action(message, "Error");
-                    perror("Error downloading file");
-                    return;
+                // Find the corresponding file by index
+                int current_index = 0;
+                for (int i = 0; i < file_count; i++) {
+                    if (is_valid_file(files[i]) && !is_duplicate(files, i, files[i])) {
+                        current_index++;
+                        if (current_index == file_index) {
+                            printf("\n\n\nDownloading file %s with index %d...\n", files[i].filename, file_index);
+                            if (downloade_file(files[i].filename, files[i].ip) == -1) {
+                                char message[1024];
+                                sprintf(message, "Error downloading file %s from %s", files[i].filename, files[i].ip);
+                                printf("%s\n", message);
+                                log_action(message, "Error");
+                                perror("Error downloading file");
+                                return;
+                            }
+                            break;
+                        }
+                    }
                 }
+            
                 char message[1024];
                 sprintf(message, "downloading file %s from %s finished", files[file_index-1].filename, files[file_index-1].ip);
                 log_action(message, "Success");
